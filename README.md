@@ -1,21 +1,21 @@
 # FactoryControl-frontend
 Frontend en Angular 19 del TFC FactoryControl. Gestion de mantenimiento industrial.
 
-# 🏭 FactoryControl – Frontend (Angular 19)
+# FactoryControl – Frontend (Angular 19)
 
 Este repositorio contiene el frontend de FactoryControl, una aplicación web para la gestión del mantenimiento industrial en una factoría de automoción. 
 
-## 🚀 Tecnologías
+## Tecnologías
 - Angular 19 (standalone)
 - Angular Material 19.2
 - TypeScript
 - SCSS
 
-## 📦 Instalación
+## Instalación
 npm install  
 ng serve -o
 
-## 📁 Estructura (provisional)
+## Estructura (provisional)
 src/
  ├── app/
  │   ├── core/
@@ -24,6 +24,6 @@ src/
  │   └── app.routes.ts
  └── assets/
 
-## 🔗 Backend
+## Backend
 Este frontend consume la API desarrollada en FastAPI disponible en el repositorio:
-https://github.com/hcurifer/factorycontrol-backend
+https://github.com/hcurifer/FactoryControl-backend
