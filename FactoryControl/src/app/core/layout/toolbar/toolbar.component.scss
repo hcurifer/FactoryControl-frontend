@@ -1,0 +1,52 @@
+:host {
+  display: block;
+}
+
+/* Toolbar principal */
+.toolbar {
+  height: 72px;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+}
+
+/* --- ZONA IZQUIERDA: LOGOS --- */
+.toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo-app {
+  height: 40px;
+}
+
+.logo-company {
+  height: 36px;
+}
+
+/* --- ZONA CENTRAL: TEXTOS --- */
+.toolbar-center {
+  flex: 1;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.subtitle {
+  font-size: 14px;
+  opacity: 0.85;
+}
+
+/* --- ZONA DERECHA: ACCIÓN --- */
+.toolbar-right {
+  display: flex;
+  align-items: center;
+}

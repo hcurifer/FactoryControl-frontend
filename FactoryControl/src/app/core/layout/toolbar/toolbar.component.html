@@ -1,0 +1,38 @@
+<mat-toolbar color="primary" class="toolbar">
+
+  <!-- ZONA IZQUIERDA: LOGOS -->
+  <div class="toolbar-left">
+    <img
+      src="assets/logo-factorycontrol.svg"
+      alt="FactoryControl"
+      class="logo-app"
+    />
+
+    <img
+      src="assets/logo-empresa.svg"
+      alt="Empresa"
+      class="logo-company"
+    />
+  </div>
+
+  <!-- ZONA CENTRAL: TEXTOS -->
+  <div class="toolbar-center">
+    <div class="title">
+      Bienvenido a FactoryControl
+    </div>
+
+    <div class="subtitle">
+      {{ userLine }}
+    </div>
+  </div>
+
+  <!-- ZONA DERECHA: ACCIÓN -->
+  <div class="toolbar-right">
+    <button mat-icon-button (click)="onActionClick()">
+      <mat-icon>
+        {{ mode === 'login' ? 'login' : 'logout' }}
+      </mat-icon>
+    </button>
+  </div>
+
+</mat-toolbar>
