@@ -21,16 +21,22 @@
       Bienvenido a FactoryControl
     </div>
 
-    <div class="subtitle">
-      {{ userLine }}
+    <div class="subtitle" *ngIf="user$ | async as user; else loginText">
+      {{ user.nombre }} {{ user.apellidos }} - Nº {{ user.numeroEmpleado }}
     </div>
+
+    <ng-template #loginText>
+      <div class="subtitle">
+        Acceda a su aplicación
+      </div>
+    </ng-template>
   </div>
 
   <!-- ZONA DERECHA: ACCIÓN -->
   <div class="toolbar-right">
     <button mat-icon-button (click)="onActionClick()">
       <mat-icon>
-        {{ mode === 'login' ? 'login' : 'logout' }}
+        {{ isLoginPage ? 'login' : 'logout' }}
       </mat-icon>
     </button>
   </div>
