@@ -1,0 +1,22 @@
+<div class="login-page">
+  <mat-card class="login-card">
+    <form [formGroup]="loginForm" (ngSubmit)="submit()">
+
+      <h2 class="title">NUMERO DE EMPLEADO</h2>
+
+      <mat-form-field appearance="fill" class="full">
+        <input matInput placeholder="Ingrese su numero de empleado" formControlName="numeroEmpleado" />
+      </mat-form-field>
+
+      <h2 class="title">CONTRASEÑA DE EMPLEADO</h2>
+
+      <mat-form-field appearance="fill" class="full">
+        <input matInput type="password" placeholder="Ingrese su contraseña de empleado" formControlName="password" />
+      </mat-form-field>
+
+      <button mat-raised-button class="btn" type="submit">
+        ACCEDER
+      </button>
+    </form>
+  </mat-card>
+</div>
