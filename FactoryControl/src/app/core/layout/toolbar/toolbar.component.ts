@@ -1,25 +1,46 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { Router } from '@angular/router';
+import { AsyncPipe, NgIf } from '@angular/common';
 
-export type ToolbarMode = 'login' | 'app';
+import { AuthService, User } from '../../services/auth.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-toolbar',
   standalone: true,
-  imports: [MatToolbarModule, MatIconModule, MatButtonModule],
+  imports: [
+    MatToolbarModule,
+    MatIconModule,
+    MatButtonModule,
+    AsyncPipe,
+    NgIf
+  ],
   templateUrl: './toolbar.component.html',
   styleUrl: './toolbar.component.scss'
 })
 export class ToolbarComponent {
-  @Input() mode: ToolbarMode = 'login';
+  user$!: Observable<User | null>;
 
-  @Input() userLine = 'Acceda a su aplicación';
+  constructor(
+    private auth: AuthService,
+    private router: Router
+  ){
+      this.user$ = this.auth.user$;
+  }
 
-  @Output() actionClick = new EventEmitter<void>();
+  get isLoginPage(): boolean {
+    return this.router.url.startsWith('/login');
+  }
 
   onActionClick(): void {
-    this.actionClick.emit();
+    if (this.isLoginPage) {
+      return;
+    }
+
+    this.auth.logout();
+    this.router.navigate(['/login']);
   }
 }
