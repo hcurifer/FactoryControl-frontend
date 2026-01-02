@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 
 export interface User {
   numeroEmpleado: string;
@@ -9,25 +9,30 @@ export interface User {
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private userSubject = new BehaviorSubject<User | null>(null);
+  private readonly STORAGE_KEY = 'factorycontrol_user';
+
+  private userSubject = new BehaviorSubject<User | null>(
+    this.loadUserFromStorage()
+  );
   user$ = this.userSubject.asObservable();
 
-  /** Login simulado (luego HTTP) **/
-  login(numeroEmpleado: string, password: string): boolean {
-    if (!numeroEmpleado || !password) return false;
-
-    // Simulación: si hay datos, “logueamos”
-    this.userSubject.next({
+  /** Login simulado (luego HTTP) **/ // Simulación: si hay datos, “logueamos”
+  login(numeroEmpleado: string, password: string): Observable<User> {
+    const user: User ={
       numeroEmpleado,
       nombre: 'Nombre',
-      apellidos: 'Apellidos'
-    });
+      apellidos: 'Apellidos',
+    };
 
-    return true;
+    this.userSubject.next(user);
+    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(user));
+
+    return of(user);
   }
 
   logout(): void {
     this.userSubject.next(null);
+    localStorage.removeItem(this.STORAGE_KEY);
   }
 
   isAuthenticated(): boolean {
@@ -36,5 +41,18 @@ export class AuthService {
 
   getUser(): User | null {
     return this.userSubject.value;
+  }
+
+
+  private loadUserFromStorage(): User | null {
+    const raw = localStorage.getItem(this.STORAGE_KEY);
+    if (!raw) return null;
+
+    try {
+      return JSON.parse(raw) as User;
+    }catch{
+      localStorage.removeItem(this.STORAGE_KEY);
+      return null;
+    }
   }
 }
