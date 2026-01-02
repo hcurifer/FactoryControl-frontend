@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from '../../../core/services/auth.service';
+
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
@@ -22,7 +25,11 @@ export class LoginComponent {
   loginForm!: FormGroup;
 
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private auth: AuthService,
+    private router: Router
+  ) {
     this.loginForm = this.fb.group({
     numeroEmpleado: ['', [Validators.required]],
     password: ['',[Validators.required]]
@@ -31,7 +38,14 @@ export class LoginComponent {
 
   submit (): void {
     if (this.loginForm.invalid) return;
-    console.log('LOGIN SUBMIT', this.loginForm.value);
+
+    const { numeroEmpleado, password } = this.loginForm.value;
+
+    const ok = this.auth.login(numeroEmpleado, password);
+
+    if (ok) {
+      this.router.navigate(['/app']);
+    }
   }
 
 }

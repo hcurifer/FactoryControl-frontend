@@ -6,6 +6,7 @@ import { AveriasComponent } from './features/averias/averias.component';
 import { PreventivosComponent } from './features/preventivos/preventivos.component';
 import { LoginLayoutComponent } from './core/layout/login-layout/login-layout.component'
 import { LoginComponent } from './features/auth/login/login.component';
+import { authChildGuard, authGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
   // Zona publica, NO necesario el login correcto
@@ -24,6 +25,8 @@ export const routes: Routes = [
   {
     path: 'app',
     component: MainLayoutComponent,
+    canActivate: [authGuard],
+    canActivateChild: [authChildGuard],
     children: [
       { path: 'dashboard', component: DashboardComponent },
       { path: 'maquinas', component: MaquinasComponent },
