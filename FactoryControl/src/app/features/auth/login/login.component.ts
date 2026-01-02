@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
+import { AuthApi } from '../../../data-access/api/auth.api';
 
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -28,6 +29,7 @@ export class LoginComponent {
   constructor(
     private fb: FormBuilder,
     private auth: AuthService,
+    private AuthApi: AuthApi,
     private router: Router
   ) {
     this.loginForm = this.fb.group({
@@ -47,5 +49,23 @@ export class LoginComponent {
       this.router.navigate(['/app']);
     }
   }
+
+  testLoginReal(): void {
+  if (this.loginForm.invalid) return;
+
+  const { numeroEmpleado, password } = this.loginForm.value;
+
+  this.AuthApi.login({
+    numero_empresa: numeroEmpleado,
+    password: password
+  }).subscribe({
+    next: (res) => {
+      console.log('LOGIN REAL OK:', res);
+    },
+    error: (err) => {
+      console.error('LOGIN REAL ERROR:', err);
+    }
+  });
+}
 
 }
