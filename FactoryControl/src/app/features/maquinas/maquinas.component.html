@@ -1,8 +1,23 @@
 <div class="maquinas-container">
 
   <header class="maquinas-header">
-    <h1>Estado de Máquinas</h1>
-    <p>Visualización general del estado operativo de la fábrica</p>
+    <div>
+      <h1>Estado de Máquinas</h1>
+      <p>Visualización general del estado operativo de la fábrica</p>
+    </div>
+    <mat-form-field appearance="outline" class="filtro">
+      <mat-label>Filtrar máquinas</mat-label>
+      <mat-select
+        [value]="filtroActual"
+        (selectionChange)="onFiltroChange($event.value)">
+        <mat-option value="todas">Todas</mat-option>
+        <mat-option value="produccion">En producción</mat-option>
+        <mat-option value="paradas">Paradas</mat-option>
+        <mat-option value="pendiente_preventivo">Pendiente preventivo</mat-option>
+        <mat-option value="con_alarma">Con alarma</mat-option>
+        <mat-option value="inactivas">Dadas de baja</mat-option>
+      </mat-select>
+    </mat-form-field>
   </header>
 
   <section class="maquinas-grid">

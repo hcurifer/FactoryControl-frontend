@@ -6,11 +6,14 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
 
 import { Maquina } from '../../data-access/models/maquina.model';
 import { MaquinaService } from '../../core/services/maquina.service';
 import { MaquinaDetalleModalComponent } from './maquina-detalle-modal/maquina-detalle-modal.component';
+import { MaquinaFiltro } from '../../data-access/models/maquina-filtro.model';
 
 @Component({
   selector: 'app-maquinas',
@@ -20,7 +23,10 @@ import { MaquinaDetalleModalComponent } from './maquina-detalle-modal/maquina-de
     MatCardModule,
     MatIconModule,
     MatButtonModule,
-    MatChipsModule
+    MatChipsModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatSelectModule
   ],
   templateUrl: './maquinas.component.html',
   styleUrl: './maquinas.component.scss'
@@ -30,10 +36,23 @@ export class MaquinasComponent {
 /** Máquinas obtenidas desde la API */
   maquinas$!: Observable<Maquina[]>;
 
-  constructor(private maquinaService: MaquinaService, private dialog: MatDialog) {}
+/** Filtro Selecionado */
+  filtroActual: MaquinaFiltro = "todas";
+
+  constructor(
+    private maquinaService: MaquinaService,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
-    this.maquinas$ = this.maquinaService.getMaquinas();
+    // Cargar todas las maquinas de forma inicial
+    this.maquinas$ = this.maquinaService.getMaquinasByFiltro(this.filtroActual);
+  }
+
+  /** Cambio de filtro desde el select */
+  onFiltroChange(filtro: MaquinaFiltro): void {
+    this.filtroActual = filtro;
+    this.maquinas$ = this.maquinaService.getMaquinasByFiltro(filtro);
   }
 
   getEstadoLabel(estado: Maquina['estado']): string {
@@ -53,6 +72,8 @@ export class MaquinasComponent {
       default: return '';
     }
   }
+
+    /** Abrir modal de detalle */
   abrirDetalle(maquina: Maquina): void {
     this.dialog.open(MaquinaDetalleModalComponent, {
       width: '700px',

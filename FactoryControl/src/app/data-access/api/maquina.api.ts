@@ -17,4 +17,33 @@ export class MaquinaApi {
       `${this.baseUrl}/maquinas`
     );
   }
+  getMaquinasProduccion(): Observable<Maquina[]> {
+    return this.http.get<Maquina[]>(
+      `${this.baseUrl}/maquinas/produccion`
+    );
+  }
+
+  getMaquinasParadas(): Observable<Maquina[]> {
+    return this.http.get<Maquina[]>(
+      `${this.baseUrl}/maquinas/paradas`
+    );
+  }
+
+  getMaquinasPendientePreventivo(): Observable<Maquina[]> {
+    return this.http.get<Maquina[]>(
+      `${this.baseUrl}/maquinas/pendiente-preventivo`
+    );
+  }
+
+  getMaquinasConAlarma(): Observable<Maquina[]> {
+    return this.http.get<Maquina[]>(
+      `${this.baseUrl}/maquinas/con-alarma`
+    );
+  }
+
+  getMaquinasInactivas(): Observable<Maquina[]> {
+    return this.http.get<Maquina[]>(
+      `${this.baseUrl}/maquinas/inactivas`
+    );
+  }
 }
