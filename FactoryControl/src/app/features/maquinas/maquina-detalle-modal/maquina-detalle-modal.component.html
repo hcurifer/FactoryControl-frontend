@@ -1,0 +1,53 @@
+<h2 mat-dialog-title>
+  {{ maquina.nombre }}
+</h2>
+
+<mat-dialog-content>
+
+  <div class="detalle-grid">
+
+    <!-- Imagen -->
+    <mat-card class="imagen-card">
+      <img
+        *ngIf="maquina.imagen; else placeholder"
+        [src]="maquina.imagen"
+        alt="Imagen de la máquina" />
+
+      <ng-template #placeholder>
+        <div class="imagen-placeholder">
+          <mat-icon>precision_manufacturing</mat-icon>
+          <span>Sin imagen</span>
+        </div>
+      </ng-template>
+    </mat-card>
+
+    <!-- Datos -->
+    <div class="detalle-info">
+
+      <p><strong>Código:</strong> {{ maquina.codigo_maquina }}</p>
+      <p><strong>Ubicación:</strong> {{ maquina.ubicacion }}</p>
+
+      <mat-chip
+        [color]="getEstadoColor(maquina.estado)"
+        selected>
+        {{ getEstadoLabel(maquina.estado) }}
+      </mat-chip>
+
+      <div class="alarma" *ngIf="maquina.alarma_activa">
+        <mat-icon color="warn">warning</mat-icon>
+        <span>Alarma activa</span>
+      </div>
+
+      <p *ngIf="maquina.descripcion">
+        <strong>Descripción:</strong><br />
+        {{ maquina.descripcion }}
+      </p>
+
+    </div>
+  </div>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="cerrar()">Cerrar</button>
+</mat-dialog-actions>

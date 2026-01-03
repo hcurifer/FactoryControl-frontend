@@ -1,2 +1,59 @@
-<h1>Máquinas</h1>
-<p>maquinas works!</p>
+<div class="maquinas-container">
+
+  <header class="maquinas-header">
+    <div>
+      <h1>Estado de Máquinas</h1>
+      <p>Visualización general del estado operativo de la fábrica</p>
+    </div>
+    <mat-form-field appearance="outline" class="filtro">
+      <mat-label>Filtrar máquinas</mat-label>
+      <mat-select
+        [value]="filtroActual"
+        (selectionChange)="onFiltroChange($event.value)">
+        <mat-option value="todas">Todas</mat-option>
+        <mat-option value="produccion">En producción</mat-option>
+        <mat-option value="paradas">Paradas</mat-option>
+        <mat-option value="pendiente_preventivo">Pendiente preventivo</mat-option>
+        <mat-option value="con_alarma">Con alarma</mat-option>
+        <mat-option value="inactivas">Dadas de baja</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </header>
+
+  <section class="maquinas-grid">
+
+    <ng-container *ngIf="maquinas$ | async as maquinas" >
+
+      <mat-card class="maquina-card" *ngFor="let maquina of maquinas">
+
+        <mat-card-header>
+          <mat-card-title>{{ maquina.nombre }}</mat-card-title>
+          <mat-card-subtitle>{{ maquina.codigo_maquina }}</mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content>
+          <p><strong>Ubicación:</strong> {{ maquina.ubicacion }}</p>
+
+          <mat-chip
+            [color]="getEstadoColor(maquina.estado)"
+            selected>
+            {{ getEstadoLabel(maquina.estado) }}
+          </mat-chip>
+
+          <div class="alarma" *ngIf="maquina.alarma_activa">
+            <mat-icon color="warn">warning</mat-icon>
+            <span>Alarma activa</span>
+          </div>
+        </mat-card-content>
+
+        <mat-card-actions align="end">
+          <button mat-button color="primary" (click)="abrirDetalle(maquina)">
+            Ver detalle
+          </button>
+        </mat-card-actions>
+
+      </mat-card>
+
+    </ng-container>
+  </section>
+</div>
