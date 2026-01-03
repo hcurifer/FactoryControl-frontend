@@ -1,0 +1,37 @@
+.maquinas-container {
+  padding: 24px;
+}
+
+.maquinas-header {
+  margin-bottom: 24px;
+
+  h1 {
+    margin: 0;
+    font-size: 24px;
+  }
+
+  p {
+    margin: 4px 0 0;
+    color: #666;
+  }
+}
+
+.maquinas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.maquina-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.alarma {
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #d32f2f;
+  font-weight: 500;
+}

@@ -1,22 +1,26 @@
-<app-toolbar
-  mode="login"
-  userLine="Acceda a su aplicación"
-></app-toolbar>
+<!-- TOOLBAR SUPERIOR (ANCHO COMPLETO) -->
+<app-toolbar></app-toolbar>
 
+<!-- ZONA INFERIOR: SIDENAV + CONTENIDO -->
 <mat-sidenav-container class="layout-container">
 
   <!-- SIDENAV -->
-  <mat-sidenav mode="side" opened class="sidenav">
+  <mat-sidenav
+    mode="side"
+    opened
+    class="sidenav">
+
     <app-sidenav></app-sidenav>
+
   </mat-sidenav>
 
   <!-- CONTENIDO -->
   <mat-sidenav-content>
-    <app-toolbar></app-toolbar>
 
     <main class="content">
       <router-outlet></router-outlet>
     </main>
+
   </mat-sidenav-content>
 
 </mat-sidenav-container>
