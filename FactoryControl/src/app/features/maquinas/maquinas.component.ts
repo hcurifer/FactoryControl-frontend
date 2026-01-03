@@ -1,11 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Observable } from 'rxjs';
+
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
 
 import { Maquina } from '../../data-access/models/maquina.model';
+import { MaquinaService } from '../../core/services/maquina.service';
 
 @Component({
   selector: 'app-maquinas',
@@ -22,33 +25,14 @@ import { Maquina } from '../../data-access/models/maquina.model';
 })
 export class MaquinasComponent {
 
-  // MOCK temporal (backend)
-  maquinas: Maquina[] = [
-    {
-      id_maquina: 1,
-      nombre: 'Prensa Hidráulica 01',
-      codigo_maquina: 'PR-H-01',
-      ubicacion: 'Nave A',
-      estado: 'disponible',
-      alarma_activa: false
-    },
-    {
-      id_maquina: 2,
-      nombre: 'Robot Soldadura 03',
-      codigo_maquina: 'RB-S-03',
-      ubicacion: 'Nave B',
-      estado: 'parada',
-      alarma_activa: true
-    },
-    {
-      id_maquina: 3,
-      nombre: 'Cinta Transportadora',
-      codigo_maquina: 'CT-12',
-      ubicacion: 'Línea 2',
-      estado: 'pendiente_preventivo',
-      alarma_activa: false
-    }
-  ];
+/** Máquinas obtenidas desde la API */
+  maquinas$!: Observable<Maquina[]>;
+
+  constructor(private maquinaService: MaquinaService) {}
+
+  ngOnInit(): void {
+    this.maquinas$ = this.maquinaService.getMaquinas();
+  }
 
   getEstadoLabel(estado: Maquina['estado']): string {
     switch (estado) {

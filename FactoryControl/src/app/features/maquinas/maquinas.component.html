@@ -7,35 +7,38 @@
 
   <section class="maquinas-grid">
 
-    <mat-card class="maquina-card" *ngFor="let maquina of maquinas">
+    <ng-container *ngIf="maquinas$ | async as maquinas" >
 
-      <mat-card-header>
-        <mat-card-title>{{ maquina.nombre }}</mat-card-title>
-        <mat-card-subtitle>{{ maquina.codigo_maquina }}</mat-card-subtitle>
-      </mat-card-header>
+      <mat-card class="maquina-card" *ngFor="let maquina of maquinas">
 
-      <mat-card-content>
-        <p><strong>Ubicación:</strong> {{ maquina.ubicacion }}</p>
+        <mat-card-header>
+          <mat-card-title>{{ maquina.nombre }}</mat-card-title>
+          <mat-card-subtitle>{{ maquina.codigo_maquina }}</mat-card-subtitle>
+        </mat-card-header>
 
-        <mat-chip
-          [color]="getEstadoColor(maquina.estado)"
-          selected>
-          {{ getEstadoLabel(maquina.estado) }}
-        </mat-chip>
+        <mat-card-content>
+          <p><strong>Ubicación:</strong> {{ maquina.ubicacion }}</p>
 
-        <div class="alarma" *ngIf="maquina.alarma_activa">
-          <mat-icon color="warn">warning</mat-icon>
-          <span>Alarma activa</span>
-        </div>
-      </mat-card-content>
+          <mat-chip
+            [color]="getEstadoColor(maquina.estado)"
+            selected>
+            {{ getEstadoLabel(maquina.estado) }}
+          </mat-chip>
 
-      <mat-card-actions align="end">
-        <button mat-button color="primary">
-          Ver detalle
-        </button>
-      </mat-card-actions>
+          <div class="alarma" *ngIf="maquina.alarma_activa">
+            <mat-icon color="warn">warning</mat-icon>
+            <span>Alarma activa</span>
+          </div>
+        </mat-card-content>
 
-    </mat-card>
+        <mat-card-actions align="end">
+          <button mat-button color="primary">
+            Ver detalle
+          </button>
+        </mat-card-actions>
 
+      </mat-card>
+
+    </ng-container>
   </section>
 </div>
