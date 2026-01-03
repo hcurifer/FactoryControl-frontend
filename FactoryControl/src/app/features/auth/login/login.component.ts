@@ -29,7 +29,7 @@ export class LoginComponent {
   constructor(
     private fb: FormBuilder,
     private auth: AuthService,
-    private AuthApi: AuthApi,
+    private authApi: AuthApi,
     private router: Router
   ) {
     this.loginForm = this.fb.group({
@@ -38,7 +38,7 @@ export class LoginComponent {
   });
   }
 
-  submit (): void {
+  /** submit (): void {
     if (this.loginForm.invalid) return;
 
     const { numeroEmpleado, password } = this.loginForm.value;
@@ -48,19 +48,21 @@ export class LoginComponent {
     if (ok) {
       this.router.navigate(['/app']);
     }
-  }
+  } **/ // Se comenta por ser la funcion de simulacion de auth.service
 
-  testLoginReal(): void {
+
+  submit(): void {
   if (this.loginForm.invalid) return;
 
   const { numeroEmpleado, password } = this.loginForm.value;
 
-  this.AuthApi.login({
+  this.authApi.login({
     numero_empresa: numeroEmpleado,
     password: password
   }).subscribe({
     next: (res) => {
-      console.log('LOGIN REAL OK:', res);
+      this.auth.setSession(res);
+      this.router.navigate(['/app']);
     },
     error: (err) => {
       console.error('LOGIN REAL ERROR:', err);

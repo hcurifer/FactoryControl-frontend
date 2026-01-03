@@ -3,10 +3,11 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
-import { AsyncPipe, NgIf } from '@angular/common';
-
-import { AuthService, User } from '../../services/auth.service';
+import { NgIf, AsyncPipe } from '@angular/common';
 import { Observable } from 'rxjs';
+
+import { AuthService } from '../../services/auth.service';
+import { LoginUser } from '../../../data-access/models/auth.model';
 
 @Component({
   selector: 'app-toolbar',
@@ -15,20 +16,20 @@ import { Observable } from 'rxjs';
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,
-    AsyncPipe,
-    NgIf
+    NgIf,
+    AsyncPipe
   ],
   templateUrl: './toolbar.component.html',
   styleUrl: './toolbar.component.scss'
 })
 export class ToolbarComponent {
-  user$!: Observable<User | null>;
+  user$: Observable<LoginUser | null>;
 
   constructor(
     private auth: AuthService,
     private router: Router
-  ){
-      this.user$ = this.auth.user$;
+  ) {
+    this.user$ = this.auth.user$;
   }
 
   get isLoginPage(): boolean {
@@ -40,7 +41,7 @@ export class ToolbarComponent {
       return;
     }
 
-    this.auth.logout();
+    this.auth.clearSession();
     this.router.navigate(['/login']);
   }
 }
