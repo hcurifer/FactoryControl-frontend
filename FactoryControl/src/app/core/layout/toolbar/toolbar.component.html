@@ -22,7 +22,7 @@
     </div>
 
     <div class="subtitle" *ngIf="user$ | async as user; else loginText">
-      {{ user.nombre }} {{ user.apellidos }} - Nº {{ user.numeroEmpleado }}
+      {{ user.nombre }} {{ user.apellidos }}
     </div>
 
     <ng-template #loginText>

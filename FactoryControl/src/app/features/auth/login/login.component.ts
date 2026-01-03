@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
+import { AuthApi } from '../../../data-access/api/auth.api';
 
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -28,6 +29,7 @@ export class LoginComponent {
   constructor(
     private fb: FormBuilder,
     private auth: AuthService,
+    private authApi: AuthApi,
     private router: Router
   ) {
     this.loginForm = this.fb.group({
@@ -36,7 +38,7 @@ export class LoginComponent {
   });
   }
 
-  submit (): void {
+  /** submit (): void {
     if (this.loginForm.invalid) return;
 
     const { numeroEmpleado, password } = this.loginForm.value;
@@ -46,6 +48,26 @@ export class LoginComponent {
     if (ok) {
       this.router.navigate(['/app']);
     }
-  }
+  } **/ // Se comenta por ser la funcion de simulacion de auth.service
+
+
+  submit(): void {
+  if (this.loginForm.invalid) return;
+
+  const { numeroEmpleado, password } = this.loginForm.value;
+
+  this.authApi.login({
+    numero_empresa: numeroEmpleado,
+    password: password
+  }).subscribe({
+    next: (res) => {
+      this.auth.setSession(res);
+      this.router.navigate(['/app']);
+    },
+    error: (err) => {
+      console.error('LOGIN REAL ERROR:', err);
+    }
+  });
+}
 
 }

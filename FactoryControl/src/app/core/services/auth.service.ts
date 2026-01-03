@@ -1,58 +1,48 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of } from 'rxjs';
-
-export interface User {
-  numeroEmpleado: string;
-  nombre?: string;
-  apellidos?: string;
-}
+import { LoginResponse, LoginUser } from '../../data-access/models/auth.model';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private readonly STORAGE_KEY = 'factorycontrol_user';
-
-  private userSubject = new BehaviorSubject<User | null>(
-    this.loadUserFromStorage()
-  );
+  private readonly TOKEN_KEY = 'fc_token';
+  private readonly USER_KEY = 'fc_user';
+  private userSubject = new BehaviorSubject<LoginUser | null>(this.loadUser());
   user$ = this.userSubject.asObservable();
 
-  /** Login simulado (luego HTTP) **/ // Simulación: si hay datos, “logueamos”
-  login(numeroEmpleado: string, password: string): Observable<User> {
-    const user: User ={
-      numeroEmpleado,
-      nombre: 'Nombre',
-      apellidos: 'Apellidos',
-    };
 
-    this.userSubject.next(user);
-    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(user));
-
-    return of(user);
+  /** Guardar el token y el usuario tras el login correcto */
+  setSession(data: LoginResponse): void{
+    localStorage.setItem(this.TOKEN_KEY, data.access_token);
+    localStorage.setItem(this.USER_KEY, JSON.stringify(data.user));
+    this.userSubject.next(data.user);
   }
 
-  logout(): void {
+  /** Elimina session despues de logout */
+  clearSession(): void {
+    localStorage.removeItem(this.TOKEN_KEY);
+    localStorage.removeItem(this.USER_KEY);
     this.userSubject.next(null);
-    localStorage.removeItem(this.STORAGE_KEY);
   }
 
+  /** Devolver el token JWT */
+  getToken(): string | null {
+    return localStorage.getItem(this.TOKEN_KEY);
+  }
+
+  /** Devolver el usuario autenticado */
+  getUser(): LoginUser | null {
+    const raw = localStorage.getItem(this.USER_KEY);
+    return raw ? JSON.parse(raw) : null;
+  }
+
+  /** verificacr si existe una session */
   isAuthenticated(): boolean {
-    return this.userSubject.value !== null;
+    return !!this.getToken();
   }
 
-  getUser(): User | null {
-    return this.userSubject.value;
-  }
+  private loadUser(): LoginUser | null {
+  const raw = localStorage.getItem(this.USER_KEY);
+  return raw ? JSON.parse(raw) : null;
+}
 
-
-  private loadUserFromStorage(): User | null {
-    const raw = localStorage.getItem(this.STORAGE_KEY);
-    if (!raw) return null;
-
-    try {
-      return JSON.parse(raw) as User;
-    }catch{
-      localStorage.removeItem(this.STORAGE_KEY);
-      return null;
-    }
-  }
 }
