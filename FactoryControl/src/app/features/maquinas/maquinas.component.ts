@@ -6,9 +6,11 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatDialog } from '@angular/material/dialog';
 
 import { Maquina } from '../../data-access/models/maquina.model';
 import { MaquinaService } from '../../core/services/maquina.service';
+import { MaquinaDetalleModalComponent } from './maquina-detalle-modal/maquina-detalle-modal.component';
 
 @Component({
   selector: 'app-maquinas',
@@ -28,7 +30,7 @@ export class MaquinasComponent {
 /** Máquinas obtenidas desde la API */
   maquinas$!: Observable<Maquina[]>;
 
-  constructor(private maquinaService: MaquinaService) {}
+  constructor(private maquinaService: MaquinaService, private dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.maquinas$ = this.maquinaService.getMaquinas();
@@ -50,5 +52,11 @@ export class MaquinasComponent {
       case 'pendiente_preventivo': return 'accent';
       default: return '';
     }
+  }
+  abrirDetalle(maquina: Maquina): void {
+    this.dialog.open(MaquinaDetalleModalComponent, {
+      width: '700px',
+      data: maquina
+    });
   }
 }
