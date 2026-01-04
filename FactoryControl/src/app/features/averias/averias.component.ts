@@ -10,6 +10,8 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 
 import { AveriaUrgente, EstadoAveriaUrgente, PrioridadAveriaUrgente } from '../../data-access/models/averia-urgente.model';
 import { AveriaUrgenteService } from '../../core/services/averia-urgente.service';
+import { AveriaUrgenteView } from '../../data-access/models/averia-urgente.view.model';
+
 
 @Component({
   selector: 'app-averias',
@@ -28,7 +30,7 @@ import { AveriaUrgenteService } from '../../core/services/averia-urgente.service
 export class AveriasComponent implements OnInit {
 
   /** Observable con la lista de averías */
-  averias$!: Observable<AveriaUrgente[]>;
+  averias$!: Observable<AveriaUrgenteView[]>;
 
   constructor(private averiaService: AveriaUrgenteService) {}
 
@@ -37,7 +39,8 @@ export class AveriasComponent implements OnInit {
   /** CARGA DE DATOS */
 
   cargarAverias(): void {
-    this.averias$ = this.averiaService.getAll();
+    // this.averias$ = this.averiaService.getAll(); // se comenta por tener un nuevo metodo con datos hechos fork
+    this.averias$ = this.averiaService.getAllEnriquecidas();
   }
 
   /** ACCIONES */

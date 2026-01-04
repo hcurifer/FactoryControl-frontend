@@ -21,6 +21,7 @@
         <div>Descripción</div>
         <div>Máquina</div>
         <div>Asignado</div>
+        <div>Denunciante</div>
         <div>Fecha</div>
         <div>Estado</div>
         <div>Prioridad</div>
@@ -46,17 +47,40 @@
           </div>
 
           <!-- MÁQUINA -->
+          <!--
           <div>
             #{{ averia.id_maquina }}
           </div>
+          -->
+          <div>
+            <strong>{{ averia.maquina_nombre }}</strong><br />
+            <span class="sub">{{ averia.maquina_ubicacion }}</span>
+          </div>
 
           <!-- USUARIO ASIGNADO -->
+           <!--
           <div>
             <span *ngIf="averia.id_usuario_asignado; else sinAsignar">
               #{{ averia.id_usuario_asignado }}
             </span>
             <ng-template #sinAsignar>—</ng-template>
           </div>
+          -->
+          <div>
+            <span *ngIf="averia.tecnico_nombre; else sinAsignar">
+              {{ averia.tecnico_nombre }} {{ averia.tecnico_apellidos }}
+            </span>
+            <ng-template #sinAsignar>—</ng-template>
+          </div>
+
+          <!-- USUARIO DENUNCIANTE -->
+          <div>
+            <span *ngIf="averia.denunciante_nombre; else sinAsignar">
+              {{ averia.denunciante_nombre }} {{ averia.tecnico_apellidos }}
+            </span>
+            <ng-template #sinAsignar>—</ng-template>
+          </div>
+
 
           <!-- FECHA -->
           <div>
