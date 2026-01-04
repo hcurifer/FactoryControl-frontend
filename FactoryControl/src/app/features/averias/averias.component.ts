@@ -16,6 +16,7 @@ import { AveriaUrgenteService } from '../../core/services/averia-urgente.service
 import { AveriaUrgenteView } from '../../data-access/models/averia-urgente.view.model';
 import { CompletarAveriaModalComponent } from './modals/completar-averia-modal/completar-averia-modal.component';
 import { NoRealizadaAveriaModalComponent } from './modals/no-realizada-averia-modal/no-realizada-averia-modal.component';
+import { CrearAveriaModalComponent } from './modals/crear-averia-modal/crear-averia-modal.component';
 
 
 @Component({
@@ -103,6 +104,21 @@ marcarNoRealizada(averia: AveriaUrgenteView): void {
     }
   });
 }
+
+crearAveria(): void {
+  const dialogRef = this.dialog.open(CrearAveriaModalComponent, {
+    width: '500px'
+  });
+
+  dialogRef.afterClosed().subscribe(data => {
+    if (data) {
+      this.averiaService
+        .crearAveria(data)
+        .subscribe(() => this.cargarAverias());
+    }
+  });
+}
+
 
 
   /** VISUALES */
