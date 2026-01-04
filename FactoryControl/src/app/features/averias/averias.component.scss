@@ -1,0 +1,106 @@
+.averias-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.averias-header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  h1 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 600;
+  }
+
+  p {
+    margin: 0;
+    color: #666;
+    font-size: 14px;
+  }
+}
+
+.averias-panel {
+  padding: 16px;
+}
+
+.panel-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  font-weight: 600;
+
+  mat-icon {
+    font-size: 20px;
+  }
+}
+
+.tabla {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.fila {
+  display: grid;
+  grid-template-columns:
+    2fr   /* descripción */
+    0.8fr /* máquina */
+    0.8fr /* asignado */
+    1fr   /* fecha */
+    1fr   /* estado */
+    1fr   /* prioridad */
+    1.6fr /* acciones */;
+
+  align-items: center;
+  gap: 8px;
+  padding: 10px 8px;
+  border-radius: 6px;
+
+  &:not(.cabecera) {
+    background-color: #fafafa;
+
+    &:hover {
+      background-color: #f0f0f0;
+    }
+  }
+}
+
+.fila.cabecera {
+  font-size: 13px;
+  font-weight: 600;
+  color: #555;
+  background-color: transparent;
+  padding-bottom: 6px;
+}
+
+.descripcion {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.motivo {
+  font-size: 12px;
+  color: #b71c1c;
+}
+
+.acciones {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+
+  button {
+    min-width: 110px;
+  }
+}
+
+.empty {
+  margin-top: 12px;
+  text-align: center;
+  color: #777;
+  font-style: italic;
+}

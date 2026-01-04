@@ -1,2 +1,116 @@
-<h1>Averías</h1>
-<p>averias works!</p>
+<div class="averias-container">
+
+  <!-- CABECERA -->
+  <header class="averias-header">
+    <h1>Averías urgentes</h1>
+    <p>Listado de incidencias registradas en planta</p>
+  </header>
+
+  <!-- PANEL PRINCIPAL -->
+  <mat-card class="averias-panel">
+
+    <div class="panel-title">
+      <span>Alarmas / Urgencias</span>
+      <mat-icon color="warn">warning</mat-icon>
+    </div>
+
+    <!-- CABECERA TABLA -->
+    <div class="tabla">
+
+      <div class="fila cabecera">
+        <div>Descripción</div>
+        <div>Máquina</div>
+        <div>Asignado</div>
+        <div>Fecha</div>
+        <div>Estado</div>
+        <div>Prioridad</div>
+        <div class="acciones">Acciones</div>
+      </div>
+
+      <!-- FILAS -->
+      <ng-container *ngIf="averias$ | async as averias">
+
+        <div
+          class="fila"
+          *ngFor="let averia of averias">
+
+          <!-- DESCRIPCIÓN -->
+          <div class="descripcion">
+            {{ averia.descripcion }}
+
+            <div
+              class="motivo"
+              *ngIf="averia.estado === 'no_realizada' && averia.motivo_no_realizada">
+              <strong>Motivo:</strong> {{ averia.motivo_no_realizada }}
+            </div>
+          </div>
+
+          <!-- MÁQUINA -->
+          <div>
+            #{{ averia.id_maquina }}
+          </div>
+
+          <!-- USUARIO ASIGNADO -->
+          <div>
+            <span *ngIf="averia.id_usuario_asignado; else sinAsignar">
+              #{{ averia.id_usuario_asignado }}
+            </span>
+            <ng-template #sinAsignar>—</ng-template>
+          </div>
+
+          <!-- FECHA -->
+          <div>
+            {{ averia.fecha_creacion | date:'dd/MM/yyyy HH:mm' }}
+          </div>
+
+          <!-- ESTADO -->
+          <div>
+            <mat-chip
+              [color]="getEstadoColor(averia.estado)"
+              selected>
+              {{ getEstadoLabel(averia.estado) }}
+            </mat-chip>
+          </div>
+
+          <!-- PRIORIDAD -->
+          <div>
+            <mat-chip selected>
+              {{ getPrioridadLabel(averia.prioridad) }}
+            </mat-chip>
+          </div>
+
+          <!-- ACCIONES -->
+          <div class="acciones">
+            <button
+              mat-stroked-button
+              color="primary"
+              [disabled]="averia.estado !== 'pendiente'"
+              (click)="completarAveria(averia)">
+              Completar
+            </button>
+
+            <button
+              mat-stroked-button
+              color="warn"
+              [disabled]="averia.estado !== 'pendiente'"
+              (click)="marcarNoRealizada(averia)">
+              No realizada
+            </button>
+          </div>
+
+        </div>
+
+        <!-- VACÍO -->
+        <p
+          class="empty"
+          *ngIf="averias.length === 0">
+          No hay averías urgentes registradas.
+        </p>
+
+      </ng-container>
+
+    </div>
+
+  </mat-card>
+
+</div>
