@@ -14,6 +14,8 @@ import { MatOptionModule } from '@angular/material/core';
 import { AveriaUrgente, EstadoAveriaUrgente, PrioridadAveriaUrgente } from '../../data-access/models/averia-urgente.model';
 import { AveriaUrgenteService } from '../../core/services/averia-urgente.service';
 import { AveriaUrgenteView } from '../../data-access/models/averia-urgente.view.model';
+import { CompletarAveriaModalComponent } from './modals/completar-averia-modal/completar-averia-modal.component';
+import { NoRealizadaAveriaModalComponent } from './modals/no-realizada-averia-modal/no-realizada-averia-modal.component';
 
 
 @Component({
@@ -38,7 +40,10 @@ export class AveriasComponent implements OnInit {
   /** Observable con la lista de averías */
   averias$!: Observable<AveriaUrgenteView[]>;
 
-  constructor(private averiaService: AveriaUrgenteService) {}
+  constructor(
+    private averiaService: AveriaUrgenteService,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {this.cargarAverias();}
 
@@ -51,6 +56,7 @@ export class AveriasComponent implements OnInit {
 
   /** ACCIONES */
 
+  /**
   completarAveria(averia: AveriaUrgente): void {
     if (averia.estado !== 'pendiente') return;
 
@@ -59,14 +65,45 @@ export class AveriasComponent implements OnInit {
       .subscribe(() => {
         this.cargarAverias();
       });
-  }
+  } */
 
+  completarAveria(averia: AveriaUrgenteView): void {
+  const dialogRef = this.dialog.open(CompletarAveriaModalComponent, {
+    width: '420px',
+    data: { descripcion: averia.descripcion }
+  });
+
+  dialogRef.afterClosed().subscribe(confirmado => {
+    if (confirmado) {
+      this.averiaService
+        .completarAveria(averia.id_averia)
+        .subscribe(() => this.cargarAverias());
+    }
+  });
+}
+
+/**
   marcarNoRealizada(averia: AveriaUrgente): void {
     if (averia.estado !== 'pendiente') return;
 
     // abrir modal
     console.log('Abrir modal no realizada:', averia.id_averia);
-  }
+  } */
+
+marcarNoRealizada(averia: AveriaUrgenteView): void {
+  const dialogRef = this.dialog.open(NoRealizadaAveriaModalComponent, {
+    width: '480px'
+  });
+
+  dialogRef.afterClosed().subscribe(motivo => {
+    if (motivo) {
+      this.averiaService
+        .marcarNoRealizada(averia.id_averia, motivo)
+        .subscribe(() => this.cargarAverias());
+    }
+  });
+}
+
 
   /** VISUALES */
 

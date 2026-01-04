@@ -1,0 +1,28 @@
+<div>
+  <h2 mat-dialog-title>Avería no realizada</h2>
+
+  <mat-dialog-content>
+    <p>Indica el motivo por el cual la avería no ha podido realizarse:</p>
+
+    <mat-form-field appearance="outline" style="width:100%">
+      <textarea
+        matInput
+        rows="4"
+        [(ngModel)]="motivo"
+        placeholder="Motivo obligatorio">
+      </textarea>
+    </mat-form-field>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button (click)="cancelar()">Cancelar</button>
+    <button
+      mat-raised-button
+      color="warn"
+      [disabled]="!motivo.trim()"
+      (click)="enviar()">
+      Enviar
+    </button>
+  </mat-dialog-actions>
+
+</div>
