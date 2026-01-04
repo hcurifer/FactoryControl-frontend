@@ -2,8 +2,18 @@
 
   <!-- CABECERA -->
   <header class="averias-header">
-    <h1>Averías urgentes</h1>
-    <p>Listado de incidencias registradas en planta</p>
+    <div class="header-left">
+      <h1>Averías urgentes</h1>
+      <p>Listado de incidencias registradas en planta</p>
+    </div>
+    <div class="header-right">
+      <mat-icon
+        class="alert-icon"
+        color="warn"
+        matTooltip="Hay averías urgentes">
+        warning
+      </mat-icon>
+    </div>
   </header>
 
   <!-- PANEL PRINCIPAL -->
@@ -11,8 +21,31 @@
 
     <div class="panel-title">
       <span>Alarmas / Urgencias</span>
-      <mat-icon color="warn">warning</mat-icon>
     </div>
+
+<div class="filtros">
+  <mat-form-field appearance="outline" class="filtro">
+    <mat-label>Estado</mat-label>
+    <mat-select [(value)]="estadoFiltro" (selectionChange)="aplicarFiltros()">
+      <mat-option value="todos">Todos</mat-option>
+      <mat-option value="pendiente">Pendiente</mat-option>
+      <mat-option value="completada">Completada</mat-option>
+      <mat-option value="no_realizada">No realizada</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="filtro">
+    <mat-label>Prioridad</mat-label>
+    <mat-select [(value)]="prioridadFiltro" (selectionChange)="aplicarFiltros()">
+      <mat-option value="todas">Todas</mat-option>
+      <mat-option value="baja">Baja</mat-option>
+      <mat-option value="media">Media</mat-option>
+      <mat-option value="alta">Alta</mat-option>
+      <mat-option value="critica">Crítica</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+
 
     <!-- CABECERA TABLA -->
     <div class="tabla">
@@ -106,19 +139,21 @@
           <!-- ACCIONES -->
           <div class="acciones">
             <button
-              mat-stroked-button
+              mat-icon-button
               color="primary"
+              matTooltip="Completar avería"
               [disabled]="averia.estado !== 'pendiente'"
               (click)="completarAveria(averia)">
-              Completar
+              <mat-icon>check_circle</mat-icon>
             </button>
 
             <button
-              mat-stroked-button
+              mat-icon-button
               color="warn"
+              matTooltip="Marcar como no realizada"
               [disabled]="averia.estado !== 'pendiente'"
               (click)="marcarNoRealizada(averia)">
-              No realizada
+              <mat-icon>cancel</mat-icon>
             </button>
           </div>
 

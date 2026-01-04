@@ -1,12 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { MatOptionModule } from '@angular/material/core';
 
 import { AveriaUrgente, EstadoAveriaUrgente, PrioridadAveriaUrgente } from '../../data-access/models/averia-urgente.model';
 import { AveriaUrgenteService } from '../../core/services/averia-urgente.service';
@@ -22,7 +25,10 @@ import { AveriaUrgenteView } from '../../data-access/models/averia-urgente.view.
     MatIconModule,
     MatButtonModule,
     MatChipsModule,
-    MatDialogModule
+    MatDialogModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatOptionModule
   ],
   templateUrl: './averias.component.html',
   styleUrl: './averias.component.scss'
@@ -91,4 +97,19 @@ export class AveriasComponent implements OnInit {
       default: return prioridad;
     }
   }
+
+estadoFiltro: EstadoAveriaUrgente | 'todos' = 'todos';
+prioridadFiltro: string = 'todas';
+
+aplicarFiltros(): void {
+  this.averias$ = this.averiaService.getAllEnriquecidas().pipe(
+    map(averias =>
+      averias.filter(a =>
+        (this.estadoFiltro === 'todos' || a.estado === this.estadoFiltro) &&
+        (this.prioridadFiltro === 'todas' || a.prioridad === this.prioridadFiltro)
+      )
+    )
+  );
+}
+
 }
