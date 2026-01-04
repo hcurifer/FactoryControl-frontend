@@ -17,6 +17,11 @@ export class MaquinaApi {
       `${this.baseUrl}/maquinas`
     );
   }
+  getById(idMaquina: number): Observable<Maquina> {
+    return this.http.get<Maquina>(
+      `${this.baseUrl}/maquinas/${idMaquina}`
+    );
+  }
   getMaquinasProduccion(): Observable<Maquina[]> {
     return this.http.get<Maquina[]>(
       `${this.baseUrl}/maquinas/produccion`
