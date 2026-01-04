@@ -14,6 +14,12 @@ export class MaquinaService {
   getMaquinas(): Observable<Maquina[]> {
     return this.maquinaApi.getMaquinas();
   }
+
+  /** Obtener máquina por ID */
+  getById(idMaquina: number): Observable<Maquina> {
+    return this.maquinaApi.getById(idMaquina);
+  }
+
   /** Selector de casos para filtros de maquinas */
   getMaquinasByFiltro(filtro: MaquinaFiltro): Observable<Maquina[]> {
     switch (filtro) {
