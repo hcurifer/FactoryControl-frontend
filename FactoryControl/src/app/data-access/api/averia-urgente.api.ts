@@ -12,13 +12,9 @@ export class AveriaUrgenteApi {
 
   constructor(private http: HttpClient) {}
 
-  crearAveria(data: {
-    descripcion: string;
-    prioridad: string;
-    id_maquina: number;
-  }): Observable<AveriaUrgente> {
-    return this.http.post<AveriaUrgente>(
-      `${this.baseUrl}/averias-urgentes`,
+  create(data: any) {
+    return this.http.post(
+      `${this.baseUrl}/averias-urgentes/`,
       data
     );
   }

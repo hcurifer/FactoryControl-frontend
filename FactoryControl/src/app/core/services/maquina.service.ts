@@ -20,6 +20,23 @@ export class MaquinaService {
     return this.maquinaApi.getById(idMaquina);
   }
 
+   /** Listado general de máquinas */
+  getAll(): Observable<Maquina[]> {
+    return this.maquinaApi.getMaquinas();
+  }
+
+  getProduccion(): Observable<Maquina[]> {
+    return this.maquinaApi.getMaquinasProduccion();
+  }
+
+  getParadas(): Observable<Maquina[]> {
+    return this.maquinaApi.getMaquinasParadas();
+  }
+
+  getConAlarma(): Observable<Maquina[]> {
+    return this.maquinaApi.getMaquinasConAlarma();
+  }
+
   /** Selector de casos para filtros de maquinas */
   getMaquinasByFiltro(filtro: MaquinaFiltro): Observable<Maquina[]> {
     switch (filtro) {

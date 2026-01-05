@@ -24,12 +24,25 @@
     </mat-form-field>
 
     <mat-form-field appearance="outline" style="width:100%">
-      <mat-label>ID Máquina</mat-label>
-      <input
-        matInput
-        type="number"
-        [(ngModel)]="id_maquina"
-        placeholder="Introduce el ID de la máquina">
+      <mat-label>Máquina</mat-label>
+      <mat-select [(ngModel)]="id_maquina">
+        <mat-option
+          *ngFor="let maquina of data.maquinas"
+          [value]="maquina.id_maquina">
+          {{ maquina.nombre }} – {{ maquina.ubicacion }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" style="width:100%">
+      <mat-label>Técnico asignado</mat-label>
+      <mat-select [(ngModel)]="id_usuario_asignado">
+        <mat-option
+          *ngFor="let usuario of data.usuarios"
+          [value]="usuario.id_usuario">
+          {{ usuario.nombre }} {{ usuario.apellidos }}
+        </mat-option>
+      </mat-select>
     </mat-form-field>
 
   </mat-dialog-content>
@@ -39,7 +52,7 @@
     <button
       mat-raised-button
       color="primary"
-      [disabled]="!descripcion || !id_maquina"
+      [disabled]="!descripcion || !id_maquina || !id_usuario_asignado"
       (click)="crear()">
       Crear
     </button>

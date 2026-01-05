@@ -9,7 +9,12 @@ export class UsuariosService {
 
   constructor(private api: UsuariosApi) {}
 
+  /** Obtener un usuario por ID */
   getById(idUsuario: number): Observable<Usuario> {
     return this.api.getById(idUsuario);
+  }
+  /** Obtener todos los usuarios */
+  getAll(): Observable<Usuario[]> {
+    return this.api.getAll();
   }
 }
