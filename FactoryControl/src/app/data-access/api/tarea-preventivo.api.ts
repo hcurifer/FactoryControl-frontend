@@ -25,4 +25,22 @@ export class TareaPreventivoApi {
       { estado }
     );
   }
+  generar(data: {
+    id_gama: number;
+    id_maquina: number;
+    id_usuario: number;
+    fecha_asignada: string;
+  }): Observable<TareaPreventivo[]> {
+    return this.http.post<TareaPreventivo[]>(
+      `${this.baseUrl}/tareas-preventivo/generar`,
+      data
+    );
+  }
+
+  completar(idTarea: number): Observable<TareaPreventivo> {
+    return this.http.patch<TareaPreventivo>(
+      `${this.baseUrl}/tareas-preventivo/${idTarea}/estado`,
+      { estado: 'completada' }
+    );
+  }
 }

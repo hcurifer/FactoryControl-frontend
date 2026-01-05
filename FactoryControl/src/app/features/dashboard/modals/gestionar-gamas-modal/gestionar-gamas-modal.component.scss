@@ -1,0 +1,22 @@
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.toolbar {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.lista {
+  border: 1px dashed #ccc;
+  border-radius: 6px;
+  padding: 16px;
+  min-height: 200px;
+}
+
+.placeholder {
+  color: #888;
+  text-align: center;
+}

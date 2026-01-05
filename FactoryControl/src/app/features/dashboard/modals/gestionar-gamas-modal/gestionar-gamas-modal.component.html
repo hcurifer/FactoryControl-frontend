@@ -1,0 +1,57 @@
+<h2 mat-dialog-title>Gestión de gamas preventivas</h2>
+
+<div mat-dialog-content class="content">
+
+  <div class="toolbar">
+    <button mat-raised-button color="primary">
+      <mat-icon>add</mat-icon>
+      Nueva gama
+    </button>
+  </div>
+
+<div class="lista" *ngIf="!cargando; else loading">
+
+    <!-- Card por cada gama -->
+    <div class="gama-card" *ngFor="let gama of gamas">
+
+      <div class="info">
+        <h3>{{ gama.nombre }}</h3>
+        <p>{{ gama.descripcion || 'Sin descripción' }}</p>
+      </div>
+
+      <div class="acciones">
+        <span
+          class="estado"
+          [class.activa]="gama.activa"
+          [class.inactiva]="!gama.activa">
+          {{ gama.activa ? 'Activa' : 'Inactiva' }}
+        </span>
+
+        <button
+          mat-icon-button
+          (click)="toggleGama(gama); $event.stopPropagation()"
+          [matTooltip]="gama.activa ? 'Desactivar gama' : 'Activar gama'">
+          <mat-icon>
+            {{ gama.activa ? 'visibility_off' : 'visibility' }}
+          </mat-icon>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Si no hay gamas -->
+    <p *ngIf="gamas.length === 0" class="placeholder">
+      No hay gamas preventivas creadas
+    </p>
+
+  </div>
+
+  <!-- LOADING -->
+  <ng-template #loading>
+    <p class="placeholder">Cargando gamas preventivas...</p>
+  </ng-template>
+
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-button (click)="cerrar()">Cerrar</button>
+</div>
