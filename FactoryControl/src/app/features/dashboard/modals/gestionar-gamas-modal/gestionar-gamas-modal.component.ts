@@ -8,6 +8,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { GamasPreventivoService } from '../../../../core/services/gamas-preventivo.service';
 import { GamaPreventivo } from '../../../../data-access/models/gama-preventivo.model';
 import { CrearGamaModalComponent } from '../crear-gama-modal/crear-gama-modal.component';
+import { TareasCatalogoGamasService } from '../../../../core/services/tareas-catalogo-gamas.service';
+import { TareaCatalogoGama } from '../../../../data-access/models/tarea-catalogo-gama.model';
+import { CrearTareaCatalogoModalComponent } from '../crear-tarea-catalogo-modal/crear-tarea-catalogo-modal.component';
 
 @Component({
   selector: 'app-gestionar-gamas-modal',
@@ -25,11 +28,15 @@ export class GestionarGamasModalComponent implements OnInit {
 
   gamas: GamaPreventivo[] = [];
   cargando = false;
+  gamaSeleccionada: GamaPreventivo | null = null;
+  tareasCatalogo: TareaCatalogoGama[] = [];
+  cargandoTareas = false;
 
   constructor(
     private dialogRef: MatDialogRef<GestionarGamasModalComponent>,
     private gamasService: GamasPreventivoService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private tareasCatalogoService: TareasCatalogoGamasService
   ) {}
 
   ngOnInit(): void {
@@ -72,6 +79,47 @@ export class GestionarGamasModalComponent implements OnInit {
     }).afterClosed().subscribe((creada) => {
       if (creada) {
         this.cargarGamas();
+      }
+    });
+  }
+
+  seleccionarGama(gama: GamaPreventivo): void {
+    this.gamaSeleccionada = gama;
+    this.cargarTareasCatalogo(gama.id_gama);
+  }
+
+  cargarTareasCatalogo(idGama: number): void {
+  this.cargandoTareas = true;
+
+  this.tareasCatalogoService.getByGama(idGama).subscribe({
+      next: (tareas) => {
+        this.tareasCatalogo = tareas;
+        this.cargandoTareas = false;
+      },
+      error: () => {
+        this.tareasCatalogo = [];
+        this.cargandoTareas = false;
+      }
+    });
+  }
+
+  abrirCrearTareaCatalogo(): void {
+    if (!this.gamaSeleccionada) return;
+
+    const siguienteOrden =
+      this.tareasCatalogo.length > 0
+        ? Math.max(...this.tareasCatalogo.map(t => t.orden)) + 1
+        : 1;
+
+    this.dialog.open(CrearTareaCatalogoModalComponent, {
+      width: '450px',
+      data: {
+        idGama: this.gamaSeleccionada.id_gama,
+        orden: siguienteOrden
+      }
+    }).afterClosed().subscribe((creada) => {
+      if (creada) {
+        this.cargarTareasCatalogo(this.gamaSeleccionada!.id_gama);
       }
     });
   }

@@ -67,8 +67,12 @@ export class DashboardComponent {
   }
   openGestionarGamas(): void {
   this.dialog.open(GestionarGamasModalComponent, {
-    width: '900px',
-    disableClose: true
-  });
-}
+    width: '90vw',
+    maxWidth: '900px',
+    height: '90vh',
+    maxHeight: '90vh',
+    disableClose: false,
+    autoFocus: false
+    });
+  }
 }

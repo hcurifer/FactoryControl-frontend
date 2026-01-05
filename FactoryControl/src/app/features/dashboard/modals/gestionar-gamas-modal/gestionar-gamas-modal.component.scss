@@ -4,6 +4,12 @@
   gap: 16px;
 }
 
+.dialog-content-scroll {
+  max-height: calc(90vh - 120px);
+  overflow-y: auto;
+  padding-right: 8px;
+}
+
 .toolbar {
   display: flex;
   justify-content: flex-end;
