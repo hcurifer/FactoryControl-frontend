@@ -17,4 +17,28 @@ export class TareasCatalogoGamasApi {
       `${this.baseUrl}/tareas-catalogo-gamas/${idTarea}`
     );
   }
+  getByGama(idGama: number): Observable<TareaCatalogoGama[]> {
+    return this.http.get<TareaCatalogoGama[]>(
+      `${this.baseUrl}/tareas-catalogo-gamas/gama/${idGama}`
+    );
+  }
+
+  create(data: Partial<TareaCatalogoGama>): Observable<TareaCatalogoGama> {
+    return this.http.post<TareaCatalogoGama>(
+      `${this.baseUrl}/tareas-catalogo-gamas/`,
+      data
+    );
+  }
+  update(idTarea: number, data: Partial<TareaCatalogoGama>): Observable<TareaCatalogoGama> {
+    return this.http.patch<TareaCatalogoGama>(
+      `${this.baseUrl}/tareas-catalogo-gamas/${idTarea}`,
+      data
+    );
+  }
+
+  delete(idTarea: number): Observable<void> {
+    return this.http.delete<void>(
+      `${this.baseUrl}/tareas-catalogo-gamas/${idTarea}`
+    );
+  }
 }

@@ -25,31 +25,46 @@ export class TareaPreventivoService {
     );
   }
 
+  generar(data: {
+    id_gama: number;
+    id_maquina: number;
+    id_usuario: number;
+    fecha_asignada: string;
+  }): Observable<TareaPreventivo[]> {
+    return this.api.generar(data);
+  }
+
+  completar(idTarea: number): Observable<TareaPreventivo> {
+    return this.api.completar(idTarea);
+  }
+
   private enriquecerTarea(
     tarea: TareaPreventivo
   ): Observable<TareaPreventivoView> {
 
     const maquina$ = this.maquinaService.getById(tarea.id_maquina);
-    const catalogo$ = this.tareasCatalogoService.getById(
-      tarea.id_tarea_catalogo_gamas
-    );
+    const catalogo$ = this.tareasCatalogoService.getByGama(tarea.id_gama);
 
     return forkJoin({
       maquina: maquina$,
       catalogo: catalogo$
     }).pipe(
-      map(({ maquina, catalogo }) => ({
-        id_tarea_asignada: tarea.id_tarea_asignada,
-        estado: tarea.estado,
-        duracion_horas: tarea.duracion_horas,
-        observaciones: tarea.observaciones,
+      map(({ maquina, catalogo }) => {
+        const tareaCatalogo = catalogo.find(
+          t => t.id_tarea_catalogo_gamas === tarea.id_tarea_catalogo_gamas
+        );
 
-        maquina_nombre: maquina?.nombre,
-        maquina_ubicacion: maquina?.ubicacion,
-        nombre_tarea: catalogo?.nombre_tarea
-      }))
+        return {
+          ...tarea,
+          maquina_nombre: maquina?.nombre,
+          maquina_ubicacion: maquina?.ubicacion,
+          nombre_tarea: tareaCatalogo?.nombre_tarea,
+          descripcion_tarea: tareaCatalogo?.descripcion
+        };
+      })
     );
   }
+
   completarTarea(idTarea: number): Observable<any> {
     return this.api.changeEstado(idTarea, 'completada');
   }
