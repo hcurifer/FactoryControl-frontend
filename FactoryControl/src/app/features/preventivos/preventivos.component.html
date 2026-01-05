@@ -1,2 +1,43 @@
-<h1>Preventivos</h1>
-<p>preventivos works!</p>
+<div class="preventivos-container">
+
+  <header class="header">
+    <h1>Tareas preventivo</h1>
+    <span>TO-DO asignado</span>
+  </header>
+
+  <div class="columnas">
+
+    <section class="col pendiente">
+      <h2>Pendientes</h2>
+
+      <div class="tarea" *ngFor="let t of pendientes$ | async">
+        <label>
+          <input
+            type="checkbox"
+            (change)="completar(t)"
+          />
+          {{ t.nombre_tarea }}
+        </label>
+
+        <span class="meta">
+          {{ t.maquina_nombre }} · {{ t.duracion_horas }}h
+        </span>
+      </div>
+    </section>
+
+    <section class="col completada">
+      <h2>Completadas</h2>
+
+      <div class="tarea done" *ngFor="let t of completadas$ | async">
+        <label>
+          <input type="checkbox" checked disabled />
+          {{ t.nombre_tarea }}
+        </label>
+        <span class="meta">
+          {{ t.maquina_nombre }} · {{ t.duracion_horas }}h
+        </span>
+      </div>
+    </section>
+
+  </div>
+</div>

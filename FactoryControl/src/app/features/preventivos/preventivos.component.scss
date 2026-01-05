@@ -1,0 +1,35 @@
+.preventivos-container {
+  padding: 24px;
+}
+
+.header {
+  margin-bottom: 20px;
+}
+
+.columnas {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.col {
+  background: #f4f1ed;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.tarea {
+  padding: 8px 0;
+  border-bottom: 1px solid #ddd;
+
+  &.done {
+    opacity: 0.6;
+    text-decoration: line-through;
+  }
+
+  .meta {
+    display: block;
+    font-size: 12px;
+    color: #666;
+  }
+}
