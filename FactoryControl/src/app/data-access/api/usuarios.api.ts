@@ -18,4 +18,7 @@ export class UsuariosApi {
       `${this.baseUrl}/usuarios/${idUsuario}`
     );
   }
+  getAll(): Observable<Usuario[]> {
+    return this.http.get<Usuario[]>(`${this.baseUrl}/usuarios/`);
+}
 }

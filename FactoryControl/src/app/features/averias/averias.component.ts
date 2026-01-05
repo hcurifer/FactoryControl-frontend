@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Observable, map } from 'rxjs';
+import { Observable, map, forkJoin } from 'rxjs';
 
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
@@ -17,6 +17,9 @@ import { AveriaUrgenteView } from '../../data-access/models/averia-urgente.view.
 import { CompletarAveriaModalComponent } from './modals/completar-averia-modal/completar-averia-modal.component';
 import { NoRealizadaAveriaModalComponent } from './modals/no-realizada-averia-modal/no-realizada-averia-modal.component';
 import { CrearAveriaModalComponent } from './modals/crear-averia-modal/crear-averia-modal.component';
+import { AuthService } from '../../core/services/auth.service';
+import { UsuariosService } from '../../core/services/usuarios.service';
+import { MaquinaService } from '../../core/services/maquina.service';
 
 
 @Component({
@@ -43,7 +46,10 @@ export class AveriasComponent implements OnInit {
 
   constructor(
     private averiaService: AveriaUrgenteService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private authService: AuthService,
+    private usuariosService: UsuariosService,
+    private maquinaService: MaquinaService
   ) {}
 
   ngOnInit(): void {this.cargarAverias();}
@@ -68,7 +74,7 @@ export class AveriasComponent implements OnInit {
       });
   } */
 
-  completarAveria(averia: AveriaUrgenteView): void {
+completarAveria(averia: AveriaUrgenteView): void {
   const dialogRef = this.dialog.open(CompletarAveriaModalComponent, {
     width: '420px',
     data: { descripcion: averia.descripcion }
@@ -80,6 +86,50 @@ export class AveriasComponent implements OnInit {
         .completarAveria(averia.id_averia)
         .subscribe(() => this.cargarAverias());
     }
+  });
+}
+
+openCrearAveria(): void {
+  this.usuariosService.getAll().subscribe(usuarios => {
+    forkJoin({
+    usuarios: this.usuariosService.getAll(),
+    maquinas: this.maquinaService.getAll()
+  }).subscribe(({ usuarios, maquinas }) => {
+
+    const usuariosActivos = usuarios.filter(
+      u => !u.fecha_baja
+    );
+
+    const maquinasDisponibles = maquinas.filter(
+      m => m.estado === 'disponible'
+    );
+
+    const dialogRef = this.dialog.open(CrearAveriaModalComponent, {
+      width: '520px',
+      disableClose: true,
+      data: {
+        usuarios: usuariosActivos,
+        maquinas: maquinasDisponibles
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (!result) return;
+
+      const usuario = this.authService.getUser();
+      if (!usuario) return;
+
+      const payload = {
+        ...result,
+        id_usuario_creador: usuario.id_usuario
+      };
+
+      this.averiaService.crear(payload).subscribe(() => {
+        this.cargarAverias();
+      });
+    });
+
+  });
   });
 }
 
@@ -104,21 +154,6 @@ marcarNoRealizada(averia: AveriaUrgenteView): void {
     }
   });
 }
-
-crearAveria(): void {
-  const dialogRef = this.dialog.open(CrearAveriaModalComponent, {
-    width: '500px'
-  });
-
-  dialogRef.afterClosed().subscribe(data => {
-    if (data) {
-      this.averiaService
-        .crearAveria(data)
-        .subscribe(() => this.cargarAverias());
-    }
-  });
-}
-
 
 
   /** VISUALES */
