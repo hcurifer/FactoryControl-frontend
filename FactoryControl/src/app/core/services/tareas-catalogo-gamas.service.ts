@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 
 import { TareasCatalogoGamasApi } from '../../data-access/api/tareas-catalogo-gamas.api';
 import { TareaCatalogoGama } from '../../data-access/models/tarea-catalogo-gama.model';
+import { TareaCatalogoGamaCreate } from '../../data-access/models/tarea-catalogo-gama-create.model';
 
 @Injectable({ providedIn: 'root' })
 export class TareasCatalogoGamasService {
@@ -12,17 +13,11 @@ export class TareasCatalogoGamasService {
   getById(idTarea: number): Observable<TareaCatalogoGama> {
     return this.api.getById(idTarea);
   }
-   getByGama(idGama: number): Observable<TareaCatalogoGama[]> {
+  getByGama(idGama: number): Observable<TareaCatalogoGama[]> {
     return this.api.getByGama(idGama);
   }
 
-  create(data: {
-    id_gama: number;
-    nombre_tarea: string;
-    descripcion?: string;
-    duracion_horas: number;
-    orden: number;
-  }): Observable<TareaCatalogoGama> {
+  create(data: TareaCatalogoGamaCreate): Observable<TareaCatalogoGama> {
     return this.api.create(data);
   }
 

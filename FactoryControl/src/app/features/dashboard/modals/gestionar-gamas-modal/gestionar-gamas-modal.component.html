@@ -1,18 +1,22 @@
 <h2 mat-dialog-title>Gestión de gamas preventivas</h2>
 
-<div mat-dialog-content class="content">
+<div mat-dialog-content class="dialog-content-scroll">
 
+  <!-- TOOLBAR -->
   <div class="toolbar">
-    <button mat-raised-button color="primary">
+    <button mat-raised-button color="primary" (click)="abrirCrearGama()">
       <mat-icon>add</mat-icon>
       Nueva gama
     </button>
   </div>
 
-<div class="lista" *ngIf="!cargando; else loading">
+  <!-- LISTADO DE GAMAS -->
+  <div class="lista" *ngIf="!cargando; else loadingGamas">
 
-    <!-- Card por cada gama -->
-    <div class="gama-card" *ngFor="let gama of gamas">
+    <div class="gama-card"
+        *ngFor="let gama of gamas"
+        (click)="seleccionarGama(gama)"
+        [class.seleccionada]="gamaSeleccionada?.id_gama === gama.id_gama">
 
       <div class="info">
         <h3>{{ gama.nombre }}</h3>
@@ -39,19 +43,48 @@
 
     </div>
 
-    <!-- Si no hay gamas -->
     <p *ngIf="gamas.length === 0" class="placeholder">
       No hay gamas preventivas creadas
     </p>
 
   </div>
 
-  <!-- LOADING -->
-  <ng-template #loading>
+  <!-- LOADING GAMAS -->
+  <ng-template #loadingGamas>
     <p class="placeholder">Cargando gamas preventivas...</p>
   </ng-template>
 
+  <!-- CATÁLOGO DE TAREAS -->
+  <div class="catalogo" *ngIf="gamaSeleccionada">
+
+    <h3>
+      Catálogo de tareas – {{ gamaSeleccionada.nombre }}
+    </h3>
+
+    <button mat-stroked-button color="primary"
+            (click)="abrirCrearTareaCatalogo()">
+      <mat-icon>add</mat-icon>
+      Añadir tarea
+    </button>
+
+    <div *ngIf="cargandoTareas">
+      Cargando tareas...
+    </div>
+
+    <div *ngIf="!cargandoTareas && tareasCatalogo.length === 0">
+      No hay tareas en esta gama
+    </div>
+
+    <div class="tarea"
+         *ngFor="let tarea of tareasCatalogo">
+      <strong>{{ tarea.nombre_tarea }}</strong>
+      <span>{{ tarea.duracion_horas }} min</span>
+    </div>
+
+  </div>
+
 </div>
+
 <div mat-dialog-actions align="end">
   <button mat-button (click)="cerrar()">Cerrar</button>
 </div>
