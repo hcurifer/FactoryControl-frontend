@@ -1,3 +1,84 @@
-<p>dashboard works!</p>
-<h1>Dashboard</h1>
-<p>Bienvenido a FactoryControl</p>
+<div class="dashboard" *ngIf="vm$ | async as vm">
+
+  <!-- BLOQUE SUPERIOR -->
+  <div class="top-grid">
+
+    <!-- TARJETA PERFIL -->
+    <mat-card class="card perfil">
+      <div class="perfil-row">
+
+        <div class="avatar">
+          <img *ngIf="vm.me.imagen; else iconUser" [src]="vm.me.imagen" />
+          <ng-template #iconUser>
+            <mat-icon>person</mat-icon>
+          </ng-template>
+        </div>
+
+        <div class="perfil-info">
+          <div class="nombre">
+            {{ vm.me.nombre }} {{ vm.me.apellidos }}
+          </div>
+
+          <div class="empresa">
+            Nº empresa: {{ vm.me.numero_empresa }}
+          </div>
+
+          <mat-chip-set>
+            <mat-chip [color]="vm.rolChipColor" selected>
+              {{ vm.rolLabel }}
+            </mat-chip>
+          </mat-chip-set>
+        </div>
+
+      </div>
+    </mat-card>
+
+    <!-- TARJETA FICHAJE -->
+    <mat-card class="card fichaje">
+      <div class="estado">
+        <span class="label">Estado</span>
+        <span class="valor" [class.ok]="vm.disponibilidadClass === 'ok'"
+              [class.bad]="vm.disponibilidadClass === 'bad'">
+          {{ vm.disponibilidadLabel }}
+        </span>
+      </div>
+
+      <div class="acciones">
+        <button
+          mat-raised-button
+          color="primary"
+          *ngIf="!vm.me.estado_disponible"
+          (click)="ficharEntrada()">
+          Fichar
+        </button>
+
+        <button
+          mat-raised-button
+          color="warn"
+          *ngIf="vm.me.estado_disponible"
+          (click)="ficharSalida()">
+          Salir
+        </button>
+      </div>
+    </mat-card>
+
+  </div>
+
+  <!-- PANEL INFERIOR -->
+  <mat-card class="card panel">
+    <div class="panel-title">Panel de acciones</div>
+
+    <!-- Técnico -->
+    <div class="panel-grid" *ngIf="vm.me.rol === 'tecnico'">
+      <button mat-stroked-button>Petición de día</button>
+    </div>
+
+    <!-- Mando -->
+    <div class="panel-grid" *ngIf="vm.me.rol === 'mando'">
+      <button mat-stroked-button>Gestionar usuarios</button>
+      <button mat-stroked-button>Asignar averías</button>
+      <button mat-stroked-button>Gestionar gamas</button>
+    </div>
+  </mat-card>
+
+</div>

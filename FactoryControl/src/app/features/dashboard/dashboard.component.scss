@@ -1,0 +1,105 @@
+.dashboard {
+  padding: 16px;
+}
+
+.top-grid {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 16px;
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card {
+  border-radius: 16px;
+}
+
+/* PERFIL */
+.perfil {
+  padding: 12px;
+
+  .perfil-row {
+    display: grid;
+    grid-template-columns: 72px 1fr;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 16px;
+    background: #e0e0e0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 16px;
+    }
+
+    mat-icon {
+      font-size: 36px;
+    }
+  }
+
+  .nombre {
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  .empresa {
+    opacity: 0.7;
+    margin-bottom: 8px;
+  }
+}
+
+/* FICHAJE */
+.fichaje {
+  padding: 12px;
+
+  .estado {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 12px;
+
+    .label {
+      opacity: 0.7;
+    }
+
+    .valor {
+      font-size: 18px;
+      font-weight: bold;
+
+      &.ok { color: #1b5e20; }
+      &.bad { color: #b71c1c; }
+    }
+  }
+
+  .acciones {
+    display: flex;
+    gap: 8px;
+  }
+}
+
+/* PANEL */
+.panel {
+  margin-top: 16px;
+  padding: 12px;
+
+  .panel-title {
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+
+  .panel-grid {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+}
