@@ -43,7 +43,7 @@ export class DashboardApi {
     idUsuario: number,
     payload: FichajeSalidaRequest
   ): Observable<void> {
-    return this.http.post<void>(
+    return this.http.patch<void>(
       `${this.baseUrl}/fichajes/salida/${idUsuario}`,
       payload
     );
