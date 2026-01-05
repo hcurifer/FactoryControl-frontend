@@ -30,6 +30,7 @@ export class GamasPreventivoService {
     data: {
       nombre?: string;
       descripcion?: string;
+      activa?: boolean;
     }
   ): Observable<GamaPreventivo> {
     return this.api.update(idGama, data);

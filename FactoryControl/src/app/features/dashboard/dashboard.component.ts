@@ -11,6 +11,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { DashboardService } from '../../core/services/dashboard.service';
 import { ModalSalidaFichajeComponent } from './modal-salida-fichaje/modal-salida-fichaje.component';
 import { DashboardVM } from '../../core/services/dashboard.service';
+import { GestionarGamasModalComponent } from './modals/gestionar-gamas-modal/gestionar-gamas-modal.component';
 
 
 
@@ -64,4 +65,10 @@ export class DashboardComponent {
         });
     });
   }
+  openGestionarGamas(): void {
+  this.dialog.open(GestionarGamasModalComponent, {
+    width: '900px',
+    disableClose: true
+  });
+}
 }
