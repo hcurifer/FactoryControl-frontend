@@ -1,0 +1,48 @@
+<div>
+  <h2 mat-dialog-title>Nueva avería urgente</h2>
+
+  <mat-dialog-content>
+
+    <mat-form-field appearance="outline" style="width:100%">
+      <mat-label>Descripción</mat-label>
+      <textarea
+        matInput
+        rows="3"
+        [(ngModel)]="descripcion"
+        placeholder="Describe la avería">
+      </textarea>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" style="width:100%">
+      <mat-label>Prioridad</mat-label>
+      <mat-select [(ngModel)]="prioridad">
+        <mat-option value="baja">Baja</mat-option>
+        <mat-option value="media">Media</mat-option>
+        <mat-option value="alta">Alta</mat-option>
+        <mat-option value="critica">Crítica</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" style="width:100%">
+      <mat-label>ID Máquina</mat-label>
+      <input
+        matInput
+        type="number"
+        [(ngModel)]="id_maquina"
+        placeholder="Introduce el ID de la máquina">
+    </mat-form-field>
+
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button (click)="cancelar()">Cancelar</button>
+    <button
+      mat-raised-button
+      color="primary"
+      [disabled]="!descripcion || !id_maquina"
+      (click)="crear()">
+      Crear
+    </button>
+  </mat-dialog-actions>
+
+</div>

@@ -7,6 +7,13 @@
       <p>Listado de incidencias registradas en planta</p>
     </div>
     <div class="header-right">
+      <button
+        mat-icon-button
+        color="primary"
+        matTooltip="Crear avería urgente"
+        (click)="crearAveria()">
+        <mat-icon>add_circle</mat-icon>
+      </button>
       <mat-icon
         class="alert-icon"
         color="warn"

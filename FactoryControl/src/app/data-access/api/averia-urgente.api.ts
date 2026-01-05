@@ -12,6 +12,18 @@ export class AveriaUrgenteApi {
 
   constructor(private http: HttpClient) {}
 
+  crearAveria(data: {
+    descripcion: string;
+    prioridad: string;
+    id_maquina: number;
+  }): Observable<AveriaUrgente> {
+    return this.http.post<AveriaUrgente>(
+      `${this.baseUrl}/averias-urgentes`,
+      data
+    );
+  }
+
+
   /** GET /averias-urgentes/ Listar todas las averías */
   getAll(): Observable<AveriaUrgente[]> {
     return this.http.get<AveriaUrgente[]>(

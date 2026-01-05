@@ -16,6 +16,14 @@ export class AveriaUrgenteService {
     private usuariosService: UsuariosService
   ) {}
 
+  crearAveria(data: {
+    descripcion: string;
+    prioridad: string;
+    id_maquina: number;
+  }): Observable<AveriaUrgente> {
+    return this.api.crearAveria(data);
+  }
+
   /** Listado general */
   getAll(): Observable<AveriaUrgente[]> {
     return this.api.getAll();
