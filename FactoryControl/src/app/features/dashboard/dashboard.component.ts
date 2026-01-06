@@ -13,7 +13,8 @@ import { ModalSalidaFichajeComponent } from './modal-salida-fichaje/modal-salida
 import { DashboardVM } from '../../core/services/dashboard.service';
 import { GestionarGamasModalComponent } from './modals/gestionar-gamas-modal/gestionar-gamas-modal.component';
 import { AsignarGamaModalComponent } from './modals/asignar-gama-modal/asignar-gama-modal.component';
-
+import { CrearUsuarioModalComponent } from './modals/crear-usuario-modal/crear-usuario-modal.component';
+import { GestionarUsuariosModalComponent } from './modals/gestionar-usuarios-modal/gestionar-usuarios-modal.component';
 
 
 
@@ -82,6 +83,24 @@ export class DashboardComponent {
       maxWidth: '95vw',
       disableClose: false,
       autoFocus: false
+    });
+  }
+  openGestionarUsuarios(): void {
+    this.dialog.open(GestionarUsuariosModalComponent, {
+      width: '600px'
+    });
+  }
+
+  openCrearUsuario(): void {
+    const dialogRef = this.dialog.open(CrearUsuarioModalComponent, {
+      width: '450px',
+      disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        console.log('Usuario creado, refrescar listado cuando exista');
+      }
     });
   }
 }
