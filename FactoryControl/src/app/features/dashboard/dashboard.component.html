@@ -75,7 +75,7 @@
 
     <!-- Mando -->
     <div class="panel-grid" *ngIf="vm.me.rol === 'mando'">
-      <button mat-stroked-button>Gestionar usuarios</button>
+      <button mat-stroked-button (click)="openGestionarUsuarios()">Gestionar usuarios</button>
       <button mat-stroked-button>Asignar averías</button>
       <button mat-stroked-button (click)="openGestionarGamas()">Gestionar gamas</button>
       <button mat-stroked-button (click)="openAsignarGama()">Asignar gama</button>
