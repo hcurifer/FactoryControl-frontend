@@ -12,6 +12,7 @@ import { DashboardService } from '../../core/services/dashboard.service';
 import { ModalSalidaFichajeComponent } from './modal-salida-fichaje/modal-salida-fichaje.component';
 import { DashboardVM } from '../../core/services/dashboard.service';
 import { GestionarGamasModalComponent } from './modals/gestionar-gamas-modal/gestionar-gamas-modal.component';
+import { AsignarGamaModalComponent } from './modals/asignar-gama-modal/asignar-gama-modal.component';
 
 
 
@@ -73,6 +74,14 @@ export class DashboardComponent {
     maxHeight: '90vh',
     disableClose: false,
     autoFocus: false
+    });
+  }
+  openAsignarGama(): void {
+    this.dialog.open(AsignarGamaModalComponent, {
+      width: '520px',
+      maxWidth: '95vw',
+      disableClose: false,
+      autoFocus: false
     });
   }
 }

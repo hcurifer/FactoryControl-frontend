@@ -1,0 +1,50 @@
+<h2 mat-dialog-title>Asignar gama y generar preventivos</h2>
+
+<mat-dialog-content class="content">
+
+  <form [formGroup]="form" class="form">
+
+    <mat-form-field appearance="outline" class="full">
+      <mat-label>Usuario</mat-label>
+      <mat-select formControlName="id_usuario">
+        <mat-option *ngFor="let u of (usuarios$ | async) ?? []" [value]="u.id_usuario">
+          {{ u.nombre }} {{ u.apellidos }} ({{ u.numero_empresa }})
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full">
+      <mat-label>Máquina</mat-label>
+      <mat-select formControlName="id_maquina">
+        <mat-option *ngFor="let m of (maquinas$ | async) ?? []" [value]="m.id_maquina">
+          {{ m.nombre }} — {{ m.ubicacion }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full">
+      <mat-label>Gama</mat-label>
+      <mat-select formControlName="id_gama">
+        <mat-option *ngFor="let g of (gamas$ | async) ?? []" [value]="g.id_gama">
+          {{ g.nombre }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full">
+      <mat-label>Fecha asignada</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="fecha_asignada">
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+  </form>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="cancelar()">Cancelar</button>
+  <button mat-raised-button color="primary" (click)="asignar()" [disabled]="form.invalid || creando">
+    Generar
+  </button>
+</mat-dialog-actions>
