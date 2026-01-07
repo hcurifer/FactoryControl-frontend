@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Maquina } from '../../data-access/models/maquina.model';
 import { MaquinaApi } from '../../data-access/api/maquina.api';
 import { MaquinaFiltro } from '../../data-access/models/maquina-filtro.model';
+import { MaquinaCreate } from '../../data-access/models/maquina-create.model';
 
 @Injectable({ providedIn: 'root' })
 export class MaquinaService {
@@ -18,6 +19,11 @@ export class MaquinaService {
   /** Obtener máquina por ID */
   getById(idMaquina: number): Observable<Maquina> {
     return this.maquinaApi.getById(idMaquina);
+  }
+
+   /** Crear una máquina */
+  create(data: MaquinaCreate): Observable<Maquina> {
+    return this.maquinaApi.create(data);
   }
 
    /** Listado general de máquinas */

@@ -9,11 +9,14 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { Maquina } from '../../data-access/models/maquina.model';
 import { MaquinaService } from '../../core/services/maquina.service';
 import { MaquinaDetalleModalComponent } from './maquina-detalle-modal/maquina-detalle-modal.component';
 import { MaquinaFiltro } from '../../data-access/models/maquina-filtro.model';
+import { CrearMaquinaModalComponent } from './modals/crear-maquina-modal/crear-maquina-modal.component';
 
 @Component({
   selector: 'app-maquinas',
@@ -26,12 +29,13 @@ import { MaquinaFiltro } from '../../data-access/models/maquina-filtro.model';
     MatChipsModule,
     MatDialogModule,
     MatFormFieldModule,
-    MatSelectModule
+    MatSelectModule,
+    MatTooltipModule
   ],
   templateUrl: './maquinas.component.html',
   styleUrl: './maquinas.component.scss'
 })
-export class MaquinasComponent {
+export class MaquinasComponent implements OnInit {
 
 /** Máquinas obtenidas desde la API */
   maquinas$!: Observable<Maquina[]>;
@@ -41,18 +45,55 @@ export class MaquinasComponent {
 
   constructor(
     private maquinaService: MaquinaService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
     // Cargar todas las maquinas de forma inicial
+    this.cargarMaquinas();
+  }
+  private cargarMaquinas(): void {
     this.maquinas$ = this.maquinaService.getMaquinasByFiltro(this.filtroActual);
   }
 
   /** Cambio de filtro desde el select */
   onFiltroChange(filtro: MaquinaFiltro): void {
     this.filtroActual = filtro;
+    this.cargarMaquinas();
     this.maquinas$ = this.maquinaService.getMaquinasByFiltro(filtro);
+  }
+
+  openCrearMaquina(): void {
+    const dialogRef = this.dialog.open(CrearMaquinaModalComponent, {
+      width: '780px',
+      maxWidth: '95vw',
+      disableClose: true,
+      panelClass: 'fc-dialog-mock',
+      autoFocus: false
+    });
+
+    dialogRef.afterClosed().subscribe(payload => {
+      if (!payload) return;
+
+      this.maquinaService.create(payload).subscribe({
+        next: () => {
+          this.snackBar.open(
+            'Máquina creada correctamente',
+            'Cerrar',
+            { duration: 3000 }
+          );
+          this.cargarMaquinas();
+        },
+        error: () => {
+          this.snackBar.open(
+            'Error al crear la máquina',
+            'Cerrar',
+            { duration: 4000 }
+          );
+        }
+      });
+    });
   }
 
   getEstadoLabel(estado: Maquina['estado']): string {
