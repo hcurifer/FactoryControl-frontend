@@ -70,8 +70,11 @@ export class GestionarUsuariosModalComponent implements OnInit{
 
   abrirCrearUsuario(): void {
     const dialogRef = this.dialog.open(CrearUsuarioModalComponent, {
-      width: '450px',
-      disableClose: true
+      width: '780px',
+      maxWidth: '95vw',
+      panelClass: 'fc-dialog-mock',
+      disableClose: true,
+      autoFocus: false
     });
 
     dialogRef.afterClosed().subscribe((creado) => {

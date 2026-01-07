@@ -73,6 +73,7 @@ export class DashboardComponent {
     maxWidth: '900px',
     height: '90vh',
     maxHeight: '90vh',
+    panelClass: 'fc-dialog-mock',
     disableClose: false,
     autoFocus: false
     });
@@ -81,20 +82,29 @@ export class DashboardComponent {
     this.dialog.open(AsignarGamaModalComponent, {
       width: '520px',
       maxWidth: '95vw',
+      panelClass: 'fc-dialog-mock',
       disableClose: false,
       autoFocus: false
     });
   }
   openGestionarUsuarios(): void {
     this.dialog.open(GestionarUsuariosModalComponent, {
-      width: '600px'
+      width: '90vw',
+      maxWidth: '900px',
+      height: '90vh',
+      maxHeight: '90vh',
+      panelClass: 'fc-dialog-mock',
+      autoFocus: false
     });
   }
 
   openCrearUsuario(): void {
     const dialogRef = this.dialog.open(CrearUsuarioModalComponent, {
-      width: '450px',
-      disableClose: true
+      width: '780px',
+      maxWidth: '95vw',
+      panelClass: 'fc-dialog-mock',
+      disableClose: true,
+      autoFocus: false
     });
 
     dialogRef.afterClosed().subscribe((result) => {

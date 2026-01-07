@@ -5,7 +5,6 @@ import { Observable, map, forkJoin } from 'rxjs';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { MatChipsModule } from '@angular/material/chips';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
@@ -30,7 +29,6 @@ import { MaquinaService } from '../../core/services/maquina.service';
     MatCardModule,
     MatIconModule,
     MatButtonModule,
-    MatChipsModule,
     MatDialogModule,
     MatFormFieldModule,
     MatSelectModule,
@@ -58,7 +56,7 @@ export class AveriasComponent implements OnInit {
 
   cargarAverias(): void {
     // this.averias$ = this.averiaService.getAll(); // se comenta por tener un nuevo metodo con datos hechos fork
-    this.averias$ = this.averiaService.getAllEnriquecidas();
+    this.aplicarFiltros();
   }
 
   /** ACCIONES */
@@ -105,8 +103,11 @@ openCrearAveria(): void {
     );
 
     const dialogRef = this.dialog.open(CrearAveriaModalComponent, {
-      width: '520px',
+      width: '780px',
+      maxWidth: '95vw',
       disableClose: true,
+      panelClass: 'fc-dialog-mock',
+      autoFocus: false,
       data: {
         usuarios: usuariosActivos,
         maquinas: maquinasDisponibles
@@ -167,12 +168,12 @@ marcarNoRealizada(averia: AveriaUrgenteView): void {
     }
   }
 
-  getEstadoColor(estado: EstadoAveriaUrgente): string {
+  getEstadoToneClass(estado: EstadoAveriaUrgente): string {
     switch (estado) {
-      case 'pendiente': return 'warn';
-      case 'completada': return 'primary';
-      case 'no_realizada': return 'accent';
-      default: return '';
+      case 'completada': return 'tone-ok';
+      case 'pendiente': return 'tone-warn';
+      case 'no_realizada': return 'tone-bad';
+      default: return 'tone-neutral';
     }
   }
 
@@ -186,18 +187,35 @@ marcarNoRealizada(averia: AveriaUrgenteView): void {
     }
   }
 
+  getPrioridadToneClass(prioridad: PrioridadAveriaUrgente): string {
+    switch (prioridad) {
+      case 'baja': return 'tone-ok';
+      case 'media': return 'tone-warn';
+      case 'alta': return 'tone-bad';
+      case 'critica': return 'tone-bad';
+      default: return 'tone-neutral';
+    }
+  }
+
 estadoFiltro: EstadoAveriaUrgente | 'todos' = 'todos';
 prioridadFiltro: string = 'todas';
 
 aplicarFiltros(): void {
   this.averias$ = this.averiaService.getAllEnriquecidas().pipe(
     map(averias =>
-      averias.filter(a =>
-        (this.estadoFiltro === 'todos' || a.estado === this.estadoFiltro) &&
-        (this.prioridadFiltro === 'todas' || a.prioridad === this.prioridadFiltro)
-      )
+      averias
+        .filter(a =>
+          (this.estadoFiltro === 'todos' || a.estado === this.estadoFiltro) &&
+          (this.prioridadFiltro === 'todas' || a.prioridad === this.prioridadFiltro)
+        )
+        .sort((a, b) => this.toTime(b.fecha_creacion) - this.toTime(a.fecha_creacion))
     )
   );
+}
+
+private toTime(value: unknown): number {
+  const time = new Date(value as any).getTime();
+  return Number.isFinite(time) ? time : 0;
 }
 
 }

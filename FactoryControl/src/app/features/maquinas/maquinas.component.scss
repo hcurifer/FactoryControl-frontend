@@ -1,18 +1,30 @@
 .maquinas-container {
-  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
 .maquinas-header {
-  margin-bottom: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 22px;
+  border-radius: var(--fc-radius-xl);
+  background: var(--fc-header);
+  color: #fff;
 
   h1 {
     margin: 0;
     font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 0.2px;
   }
 
   p {
-    margin: 4px 0 0;
-    color: #666;
+    margin: 6px 0 0;
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 14px;
   }
 }
 
@@ -25,6 +37,14 @@
 .maquina-card {
   display: flex;
   flex-direction: column;
+  border-radius: var(--fc-radius-md);
+  background: var(--fc-surface);
+  border: 1px solid var(--fc-border-color);
+  box-shadow: var(--fc-shadow-md);
+
+  &:hover {
+    background: var(--fc-surface-strong);
+  }
 }
 
 .alarma {
@@ -35,14 +55,27 @@
   color: #d32f2f;
   font-weight: 500;
 }
-.maquinas-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 16px;
+.filtro {
+  min-width: 260px;
 }
 
-.filtro {
-  min-width: 240px;
+.maquinas-header ::ng-deep .mat-mdc-text-field-wrapper {
+  background: rgba(255, 255, 255, 0.10);
+  border-radius: var(--fc-radius-md);
+}
+
+.maquinas-header ::ng-deep .mdc-notched-outline__leading,
+.maquinas-header ::ng-deep .mdc-notched-outline__notch,
+.maquinas-header ::ng-deep .mdc-notched-outline__trailing {
+  border-color: rgba(255, 255, 255, 0.35) !important;
+}
+
+.maquinas-header ::ng-deep .mat-mdc-form-field-label,
+.maquinas-header ::ng-deep .mat-mdc-select-arrow {
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+
+.maquinas-header ::ng-deep .mat-mdc-select-value {
+  color: #fff !important;
 }
 

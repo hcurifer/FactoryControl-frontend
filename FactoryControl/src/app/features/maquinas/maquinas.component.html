@@ -1,10 +1,11 @@
-<div class="maquinas-container">
+<div class="maquinas-container fc-page">
 
   <header class="maquinas-header">
     <div>
       <h1>Estado de Máquinas</h1>
       <p>Visualización general del estado operativo de la fábrica</p>
     </div>
+
     <mat-form-field appearance="outline" class="filtro">
       <mat-label>Filtrar máquinas</mat-label>
       <mat-select
@@ -22,7 +23,7 @@
 
   <section class="maquinas-grid">
 
-    <ng-container *ngIf="maquinas$ | async as maquinas" >
+    <ng-container *ngIf="maquinas$ | async as maquinas">
 
       <mat-card class="maquina-card" *ngFor="let maquina of maquinas">
 

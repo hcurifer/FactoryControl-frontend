@@ -1,0 +1,39 @@
+<div mat-dialog-title class="dialog-title">
+  <div class="title-text">
+    <h2>Tareas · {{ data.gama.nombre }}</h2>
+    <p>Catálogo de tareas de la gama preventiva.</p>
+  </div>
+
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="abrirCrearTareaCatalogo()">
+    <mat-icon>add</mat-icon>
+    Añadir tarea
+  </button>
+</div>
+
+<div mat-dialog-content class="dialog-content-scroll">
+  <div class="loading" *ngIf="cargandoTareas">Cargando tareas...</div>
+
+  <div class="empty" *ngIf="!cargandoTareas && tareasCatalogo.length === 0">
+    No hay tareas en esta gama.
+  </div>
+
+  <div class="tareas" *ngIf="!cargandoTareas && tareasCatalogo.length > 0">
+    <div class="tarea" *ngFor="let tarea of tareasCatalogo">
+      <div class="tarea-main">
+        <strong>{{ tarea.nombre_tarea }}</strong>
+        <div class="tarea-desc" *ngIf="tarea.descripcion">{{ tarea.descripcion }}</div>
+      </div>
+      <div class="tarea-meta">
+        <span class="duracion">{{ tarea.duracion_horas | number:'1.0-2' }} h</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div mat-dialog-actions align="end">
+  <button mat-button (click)="cerrar()">Cerrar</button>
+</div>
+

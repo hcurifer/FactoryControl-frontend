@@ -1,61 +1,67 @@
-<div>
-  <h2 mat-dialog-title>Nueva avería urgente</h2>
-
-  <mat-dialog-content>
-
-    <mat-form-field appearance="outline" style="width:100%">
-      <mat-label>Descripción</mat-label>
-      <textarea
-        matInput
-        rows="3"
-        [(ngModel)]="descripcion"
-        placeholder="Describe la avería">
-      </textarea>
-    </mat-form-field>
-
-    <mat-form-field appearance="outline" style="width:100%">
-      <mat-label>Prioridad</mat-label>
-      <mat-select [(ngModel)]="prioridad">
-        <mat-option value="baja">Baja</mat-option>
-        <mat-option value="media">Media</mat-option>
-        <mat-option value="alta">Alta</mat-option>
-        <mat-option value="critica">Crítica</mat-option>
-      </mat-select>
-    </mat-form-field>
-
-    <mat-form-field appearance="outline" style="width:100%">
-      <mat-label>Máquina</mat-label>
-      <mat-select [(ngModel)]="id_maquina">
-        <mat-option
-          *ngFor="let maquina of data.maquinas"
-          [value]="maquina.id_maquina">
-          {{ maquina.nombre }} – {{ maquina.ubicacion }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-
-    <mat-form-field appearance="outline" style="width:100%">
-      <mat-label>Técnico asignado</mat-label>
-      <mat-select [(ngModel)]="id_usuario_asignado">
-        <mat-option
-          *ngFor="let usuario of data.usuarios"
-          [value]="usuario.id_usuario">
-          {{ usuario.nombre }} {{ usuario.apellidos }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-
-  </mat-dialog-content>
-
-  <mat-dialog-actions align="end">
-    <button mat-button (click)="cancelar()">Cancelar</button>
-    <button
-      mat-raised-button
-      color="primary"
-      [disabled]="!descripcion || !id_maquina || !id_usuario_asignado"
-      (click)="crear()">
-      Crear
-    </button>
-  </mat-dialog-actions>
-
+<div mat-dialog-title class="dialog-title">
+  <div class="title-text">
+    <h2>Nueva avería urgente</h2>
+    <p>Registra una incidencia y asígnala a un técnico.</p>
+  </div>
 </div>
+
+<div mat-dialog-content class="dialog-content">
+  <div class="sheet">
+    <form class="form-grid">
+      <mat-form-field appearance="outline" class="field field-descripcion">
+        <mat-label>Descripción</mat-label>
+        <textarea
+          matInput
+          rows="3"
+          [(ngModel)]="descripcion"
+          name="descripcion"
+          placeholder="Describe la avería">
+        </textarea>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="field field-prioridad">
+        <mat-label>Prioridad</mat-label>
+        <mat-select [(ngModel)]="prioridad" name="prioridad">
+          <mat-option value="baja">Baja</mat-option>
+          <mat-option value="media">Media</mat-option>
+          <mat-option value="alta">Alta</mat-option>
+          <mat-option value="critica">Crítica</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="field field-maquina">
+        <mat-label>Máquina</mat-label>
+        <mat-select [(ngModel)]="id_maquina" name="id_maquina">
+          <mat-option
+            *ngFor="let maquina of data.maquinas"
+            [value]="maquina.id_maquina">
+            {{ maquina.nombre }} · {{ maquina.ubicacion }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="field field-tecnico">
+        <mat-label>Técnico asignado</mat-label>
+        <mat-select [(ngModel)]="id_usuario_asignado" name="id_usuario_asignado">
+          <mat-option
+            *ngFor="let usuario of data.usuarios"
+            [value]="usuario.id_usuario">
+            {{ usuario.nombre }} {{ usuario.apellidos }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </form>
+  </div>
+</div>
+
+<div mat-dialog-actions align="end" class="dialog-actions">
+  <button mat-button (click)="cancelar()">Cancelar</button>
+  <button
+    mat-raised-button
+    color="primary"
+    [disabled]="!descripcion || !id_maquina || !id_usuario_asignado"
+    (click)="crear()">
+    Crear
+  </button>
+</div>
+

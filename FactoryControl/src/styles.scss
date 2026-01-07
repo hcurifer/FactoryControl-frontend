@@ -17,3 +17,53 @@ html {
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+:root {
+  --fc-bg: #a9c4ff;
+  --fc-accent: #3d9aff;
+  --fc-header: #2f2f2f;
+  --fc-nav: #4b4b4b;
+  --fc-nav-icon: rgba(255, 255, 255, 0.92);
+  --fc-surface: rgba(255, 255, 255, 0.92);
+  --fc-surface-strong: #ffffff;
+  --fc-border-color: rgba(0, 0, 0, 0.06);
+  --fc-text-muted: rgba(0, 0, 0, 0.65);
+
+  --fc-radius-xl: 22px;
+  --fc-radius-lg: 18px;
+  --fc-radius-md: 14px;
+
+  --fc-shadow-lg: 0 10px 26px rgba(0, 0, 0, 0.14);
+  --fc-shadow-md: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+body {
+  background: var(--fc-bg);
+}
+
+.fc-page {
+  padding: 16px;
+}
+
+.fc-surface {
+  background: var(--fc-surface);
+  border: 1px solid var(--fc-border-color);
+  border-radius: var(--fc-radius-xl);
+  box-shadow: var(--fc-shadow-lg);
+}
+
+/* Dialog look */
+.fc-dialog-mock .mat-mdc-dialog-surface {
+  background: var(--fc-bg);
+  padding: 0;
+  border-radius: var(--fc-radius-xl);
+  overflow: hidden;
+}
+
+.fc-dialog-mock .mat-mdc-dialog-content {
+  padding: 0;
+}
+
+.fc-dialog-mock .mat-mdc-dialog-actions {
+  padding: 10px 22px 18px;
+}

@@ -1,35 +1,86 @@
 .preventivos-container {
-  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
 .header {
-  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 22px;
+  border-radius: var(--fc-radius-xl);
+  background: var(--fc-header);
+  color: #fff;
+
+  h1 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+  }
+
+  span {
+    display: block;
+    margin-top: 6px;
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 14px;
+  }
 }
 
 .columnas {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 24px;
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+  }
 }
 
 .col {
-  background: #f4f1ed;
-  border-radius: 12px;
-  padding: 16px;
+  background: rgba(0, 0, 0, 0.55);
+  border-radius: var(--fc-radius-xl);
+  padding: 14px;
+  box-shadow: var(--fc-shadow-lg);
+
+  h2 {
+    margin: 0 0 12px;
+    font-size: 13px;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.85);
+  }
 }
 
 .tarea {
-  padding: 8px 0;
-  border-bottom: 1px solid #ddd;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid var(--fc-border-color);
+  border-radius: var(--fc-radius-md);
+  box-shadow: var(--fc-shadow-md);
+  padding: 10px 12px;
+  margin-bottom: 10px;
+
+  label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+  }
 
   &.done {
-    opacity: 0.6;
-    text-decoration: line-through;
+    opacity: 0.7;
+
+    label {
+      text-decoration: line-through;
+    }
   }
 
   .meta {
     display: block;
     font-size: 12px;
-    color: #666;
+    color: var(--fc-text-muted);
+    margin-top: 6px;
   }
 }
