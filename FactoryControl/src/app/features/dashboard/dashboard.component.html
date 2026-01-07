@@ -70,7 +70,7 @@
 
     <!-- Técnico -->
     <div class="panel-grid" *ngIf="vm.me.rol === 'tecnico'">
-      <button mat-stroked-button>Petición de día</button>
+      <button mat-stroked-button (click)="openPeticionDia()">Petición de día</button>
     </div>
 
     <!-- Mando -->

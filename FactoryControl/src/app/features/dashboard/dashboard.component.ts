@@ -15,6 +15,7 @@ import { GestionarGamasModalComponent } from './modals/gestionar-gamas-modal/ges
 import { AsignarGamaModalComponent } from './modals/asignar-gama-modal/asignar-gama-modal.component';
 import { CrearUsuarioModalComponent } from './modals/crear-usuario-modal/crear-usuario-modal.component';
 import { GestionarUsuariosModalComponent } from './modals/gestionar-usuarios-modal/gestionar-usuarios-modal.component';
+import { PeticionDiaModalComponent } from './modals/peticion-dia-modal/peticion-dia-modal.component';
 
 
 
@@ -110,6 +111,22 @@ export class DashboardComponent {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         console.log('Usuario creado, refrescar listado cuando exista');
+      }
+    });
+  }
+
+  openPeticionDia(): void {
+    const dialogRef = this.dialog.open(PeticionDiaModalComponent, {
+      width: '520px',
+      maxWidth: '95vw',
+      panelClass: 'fc-dialog-mock',
+      disableClose: false,
+      autoFocus: false
+    });
+
+    dialogRef.afterClosed().subscribe((ok) => {
+      if (ok) {
+        console.log('Petición de día enviada');
       }
     });
   }
