@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
 import { Maquina } from '../models/maquina.model';
+import { MaquinaCreate } from '../models/maquina-create.model';
 
 @Injectable({ providedIn: 'root' })
 export class MaquinaApi {
@@ -49,6 +50,13 @@ export class MaquinaApi {
   getMaquinasInactivas(): Observable<Maquina[]> {
     return this.http.get<Maquina[]>(
       `${this.baseUrl}/maquinas/inactivas`
+    );
+  }
+
+  create(data: MaquinaCreate): Observable<Maquina> {
+    return this.http.post<Maquina>(
+      `${this.baseUrl}/maquinas/`,
+      data
     );
   }
 }

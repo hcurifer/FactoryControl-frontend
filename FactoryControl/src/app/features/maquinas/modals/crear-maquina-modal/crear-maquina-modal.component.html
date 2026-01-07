@@ -1,0 +1,87 @@
+<div mat-dialog-title class="dialog-title">
+  <div class="title-text">
+    <h2>Nueva máquina</h2>
+    <p>Registra una nueva máquina en el sistema.</p>
+  </div>
+</div>
+
+<div mat-dialog-content class="dialog-content">
+  <div class="sheet">
+    <form class="form-grid">
+
+      <mat-form-field appearance="outline" class="field field-nombre">
+        <mat-label>Nombre</mat-label>
+        <input
+          matInput
+          [(ngModel)]="nombre"
+          name="nombre"
+          placeholder="Ej. Taladro">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="field field-codigo">
+        <mat-label>Código máquina</mat-label>
+        <input
+          matInput
+          [(ngModel)]="codigo_maquina"
+          name="codigo_maquina"
+          placeholder="Ej. TL_01">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="field field-ubicacion">
+        <mat-label>Ubicación</mat-label>
+        <input
+          matInput
+          [(ngModel)]="ubicacion"
+          name="ubicacion"
+          placeholder="Ej. Nave B">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="field field-estado">
+        <mat-label>Estado</mat-label>
+        <mat-select [(ngModel)]="estado" name="estado">
+          <mat-option value="disponible">Disponible</mat-option>
+          <mat-option value="pendiente_preventivo">Pendiente preventivo</mat-option>
+          <mat-option value="parada">Parada</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div class="field field-alarma">
+        <mat-slide-toggle [(ngModel)]="alarma_activa" name="alarma_activa">
+          Alarma activa
+        </mat-slide-toggle>
+      </div>
+
+      <mat-form-field appearance="outline" class="field field-descripcion">
+        <mat-label>Descripción</mat-label>
+        <textarea
+          matInput
+          rows="3"
+          [(ngModel)]="descripcion"
+          name="descripcion"
+          placeholder="Descripción opcional">
+        </textarea>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="field field-imagen">
+        <mat-label>Imagen (URL o ruta)</mat-label>
+        <input
+          matInput
+          [(ngModel)]="imagen"
+          name="imagen"
+          placeholder="Opcional">
+      </mat-form-field>
+
+    </form>
+  </div>
+</div>
+
+<div mat-dialog-actions align="end" class="dialog-actions">
+  <button mat-button (click)="cancelar()">Cancelar</button>
+  <button
+    mat-raised-button
+    color="primary"
+    [disabled]="!nombre || !codigo_maquina || !ubicacion"
+    (click)="crear()">
+    Crear
+  </button>
+</div>
