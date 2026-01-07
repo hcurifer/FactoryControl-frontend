@@ -12,7 +12,12 @@
         placeholder="Motivo obligatorio">
       </textarea>
     </mat-form-field>
+
+      <mat-checkbox [(ngModel)]="notificar">
+        Notificar con correo automático desde la aplicación
+      </mat-checkbox>
   </mat-dialog-content>
+
 
   <mat-dialog-actions align="end">
     <button mat-button (click)="cancelar()">Cancelar</button>

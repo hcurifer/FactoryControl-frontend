@@ -143,15 +143,24 @@ openCrearAveria(): void {
   } */
 
 marcarNoRealizada(averia: AveriaUrgenteView): void {
+
+  const usuario = this.authService.getUser();
+  if (!usuario) return;
+
   const dialogRef = this.dialog.open(NoRealizadaAveriaModalComponent, {
-    width: '480px'
+    width: '480px',
+    disableClose: true,
+    data: {
+      idAveria: averia.id_averia,
+      idMaquina: averia.id_maquina,
+      idUsuarioActual: usuario.id_usuario,
+      idMando: averia.id_usuario_creador
+    }
   });
 
-  dialogRef.afterClosed().subscribe(motivo => {
-    if (motivo) {
-      this.averiaService
-        .marcarNoRealizada(averia.id_averia, motivo)
-        .subscribe(() => this.cargarAverias());
+  dialogRef.afterClosed().subscribe(refrescar => {
+    if (refrescar) {
+      this.cargarAverias();
     }
   });
 }
