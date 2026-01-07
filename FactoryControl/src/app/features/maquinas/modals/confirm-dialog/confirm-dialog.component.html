@@ -1,0 +1,18 @@
+<div class="confirm-header">
+  <mat-icon class="icon">{{ data.icon || 'warning' }}</mat-icon>
+
+  <div class="texts">
+    <div class="title">{{ data.titulo }}</div>
+    <div class="subtitle">{{ data.mensaje }}</div>
+  </div>
+</div>
+
+<div class="confirm-actions">
+  <button mat-button (click)="cancelar()">
+    {{ data.cancelText || 'Cancelar' }}
+  </button>
+
+  <button mat-raised-button color="warn" (click)="confirmar()">
+    {{ data.confirmText || 'Confirmar' }}
+  </button>
+</div>

@@ -59,4 +59,17 @@ export class MaquinaApi {
       data
     );
   }
+
+  deleteLogico(idMaquina: number) {
+    return this.http.delete(
+      `${this.baseUrl}/maquinas/${idMaquina}`
+    );
+  }
+
+  deleteFisico(idMaquina: number) {
+    return this.http.delete(
+      `${this.baseUrl}/maquinas/${idMaquina}/fisico`
+    );
+  }
+
 }

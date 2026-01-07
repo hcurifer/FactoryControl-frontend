@@ -45,6 +45,30 @@
 
     </div>
   </div>
+<!--
+  <div class="acciones-footer">
+  <button mat-button (click)="cerrar()">Cerrar</button>
+</div> -->
+
+<!-- Acciones SOLO MANDO -->
+<div class="acciones-mando" *ngIf="esMando">
+
+  <button
+    mat-stroked-button
+    color="warn"
+    (click)="bajaLogicaConDobleConfirmacion()">
+    Dar de baja (lógica)
+  </button>
+
+  <button
+    mat-raised-button
+    color="warn"
+    (click)="deleteFisicoConDobleConfirmacion()">
+    Eliminar definitivamente
+  </button>
+
+</div>
+
 
 </mat-dialog-content>
 
