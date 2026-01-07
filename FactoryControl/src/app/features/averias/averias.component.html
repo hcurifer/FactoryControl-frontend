@@ -1,4 +1,4 @@
-<div class="averias-container">
+<div class="averias-container fc-page">
 
   <!-- CABECERA -->
   <header class="averias-header">
@@ -16,7 +16,6 @@
       </button>
       <mat-icon
         class="alert-icon"
-        color="warn"
         matTooltip="Hay averías urgentes">
         warning
       </mat-icon>
@@ -30,152 +29,119 @@
       <span>Alarmas / Urgencias</span>
     </div>
 
-<div class="filtros">
-  <mat-form-field appearance="outline" class="filtro">
-    <mat-label>Estado</mat-label>
-    <mat-select [(value)]="estadoFiltro" (selectionChange)="aplicarFiltros()">
-      <mat-option value="todos">Todos</mat-option>
-      <mat-option value="pendiente">Pendiente</mat-option>
-      <mat-option value="completada">Completada</mat-option>
-      <mat-option value="no_realizada">No realizada</mat-option>
-    </mat-select>
-  </mat-form-field>
+    <div class="filtros">
+      <mat-form-field appearance="outline" class="filtro">
+        <mat-label>Estado</mat-label>
+        <mat-select [(value)]="estadoFiltro" (selectionChange)="aplicarFiltros()">
+          <mat-option value="todos">Todos</mat-option>
+          <mat-option value="pendiente">Pendiente</mat-option>
+          <mat-option value="completada">Completada</mat-option>
+          <mat-option value="no_realizada">No realizada</mat-option>
+        </mat-select>
+      </mat-form-field>
 
-  <mat-form-field appearance="outline" class="filtro">
-    <mat-label>Prioridad</mat-label>
-    <mat-select [(value)]="prioridadFiltro" (selectionChange)="aplicarFiltros()">
-      <mat-option value="todas">Todas</mat-option>
-      <mat-option value="baja">Baja</mat-option>
-      <mat-option value="media">Media</mat-option>
-      <mat-option value="alta">Alta</mat-option>
-      <mat-option value="critica">Crítica</mat-option>
-    </mat-select>
-  </mat-form-field>
-</div>
+      <mat-form-field appearance="outline" class="filtro">
+        <mat-label>Prioridad</mat-label>
+        <mat-select [(value)]="prioridadFiltro" (selectionChange)="aplicarFiltros()">
+          <mat-option value="todas">Todas</mat-option>
+          <mat-option value="baja">Baja</mat-option>
+          <mat-option value="media">Media</mat-option>
+          <mat-option value="alta">Alta</mat-option>
+          <mat-option value="critica">Crítica</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
 
+    <!-- TABLA -->
+    <ng-container *ngIf="averias$ | async as averias">
+      <ng-template #sinAsignar>—</ng-template>
 
-    <!-- CABECERA TABLA -->
-    <div class="tabla">
+      <div class="tabla-wrap" *ngIf="averias.length > 0">
+        <table class="tabla">
+          <thead>
+            <tr>
+              <th>Descripción</th>
+              <th>Máquina</th>
+              <th>Asignado</th>
+              <th>Denunciante</th>
+              <th>Fecha</th>
+              <th>Estado</th>
+              <th>Prioridad</th>
+              <th class="acciones">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let averia of averias">
+              <td class="descripcion" data-label="Descripción">
+                {{ averia.descripcion }}
 
-      <div class="fila cabecera">
-        <div>Descripción</div>
-        <div>Máquina</div>
-        <div>Asignado</div>
-        <div>Denunciante</div>
-        <div>Fecha</div>
-        <div>Estado</div>
-        <div>Prioridad</div>
-        <div class="acciones">Acciones</div>
+                <div
+                  class="motivo"
+                  *ngIf="averia.estado === 'no_realizada' && averia.motivo_no_realizada">
+                  <strong>Motivo:</strong> {{ averia.motivo_no_realizada }}
+                </div>
+              </td>
+              <td data-label="Máquina">
+                <strong>{{ averia.maquina_nombre }}</strong><br />
+                <span class="sub">{{ averia.maquina_ubicacion }}</span>
+              </td>
+              <td data-label="Asignado">
+                <span *ngIf="averia.tecnico_nombre; else sinAsignar">
+                  {{ averia.tecnico_nombre }} {{ averia.tecnico_apellidos }}
+                </span>
+              </td>
+              <td data-label="Denunciante">
+                <span *ngIf="averia.denunciante_nombre; else sinAsignar">
+                  {{ averia.denunciante_nombre }} {{ averia.tecnico_apellidos }}
+                </span>
+              </td>
+              <td data-label="Fecha">
+                {{ averia.fecha_creacion | date:'dd/MM/yyyy HH:mm' }}
+              </td>
+              <td data-label="Estado">
+                <span
+                  class="estado-text"
+                  [ngClass]="getEstadoToneClass(averia.estado)">
+                  {{ getEstadoLabel(averia.estado) }}
+                </span>
+              </td>
+              <td data-label="Prioridad">
+                <span
+                  class="prioridad-text"
+                  [ngClass]="getPrioridadToneClass(averia.prioridad)">
+                  {{ getPrioridadLabel(averia.prioridad) }}
+                </span>
+              </td>
+              <td class="acciones" data-label="Acciones">
+                <button
+                  mat-icon-button
+                  color="primary"
+                  matTooltip="Completar avería"
+                  [disabled]="averia.estado !== 'pendiente'"
+                  (click)="completarAveria(averia)">
+                  <mat-icon>check_circle</mat-icon>
+                </button>
+
+                <button
+                  mat-icon-button
+                  color="warn"
+                  matTooltip="Marcar como no realizada"
+                  [disabled]="averia.estado !== 'pendiente'"
+                  (click)="marcarNoRealizada(averia)">
+                  <mat-icon>cancel</mat-icon>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
 
-      <!-- FILAS -->
-      <ng-container *ngIf="averias$ | async as averias">
-
-        <div
-          class="fila"
-          *ngFor="let averia of averias">
-
-          <!-- DESCRIPCIÓN -->
-          <div class="descripcion">
-            {{ averia.descripcion }}
-
-            <div
-              class="motivo"
-              *ngIf="averia.estado === 'no_realizada' && averia.motivo_no_realizada">
-              <strong>Motivo:</strong> {{ averia.motivo_no_realizada }}
-            </div>
-          </div>
-
-          <!-- MÁQUINA -->
-          <!--
-          <div>
-            #{{ averia.id_maquina }}
-          </div>
-          -->
-          <div>
-            <strong>{{ averia.maquina_nombre }}</strong><br />
-            <span class="sub">{{ averia.maquina_ubicacion }}</span>
-          </div>
-
-          <!-- USUARIO ASIGNADO -->
-           <!--
-          <div>
-            <span *ngIf="averia.id_usuario_asignado; else sinAsignar">
-              #{{ averia.id_usuario_asignado }}
-            </span>
-            <ng-template #sinAsignar>—</ng-template>
-          </div>
-          -->
-          <div>
-            <span *ngIf="averia.tecnico_nombre; else sinAsignar">
-              {{ averia.tecnico_nombre }} {{ averia.tecnico_apellidos }}
-            </span>
-            <ng-template #sinAsignar>—</ng-template>
-          </div>
-
-          <!-- USUARIO DENUNCIANTE -->
-          <div>
-            <span *ngIf="averia.denunciante_nombre; else sinAsignar">
-              {{ averia.denunciante_nombre }} {{ averia.tecnico_apellidos }}
-            </span>
-            <ng-template #sinAsignar>—</ng-template>
-          </div>
-
-
-          <!-- FECHA -->
-          <div>
-            {{ averia.fecha_creacion | date:'dd/MM/yyyy HH:mm' }}
-          </div>
-
-          <!-- ESTADO -->
-          <div>
-            <mat-chip
-              [color]="getEstadoColor(averia.estado)"
-              selected>
-              {{ getEstadoLabel(averia.estado) }}
-            </mat-chip>
-          </div>
-
-          <!-- PRIORIDAD -->
-          <div>
-            <mat-chip selected>
-              {{ getPrioridadLabel(averia.prioridad) }}
-            </mat-chip>
-          </div>
-
-          <!-- ACCIONES -->
-          <div class="acciones">
-            <button
-              mat-icon-button
-              color="primary"
-              matTooltip="Completar avería"
-              [disabled]="averia.estado !== 'pendiente'"
-              (click)="completarAveria(averia)">
-              <mat-icon>check_circle</mat-icon>
-            </button>
-
-            <button
-              mat-icon-button
-              color="warn"
-              matTooltip="Marcar como no realizada"
-              [disabled]="averia.estado !== 'pendiente'"
-              (click)="marcarNoRealizada(averia)">
-              <mat-icon>cancel</mat-icon>
-            </button>
-          </div>
-
-        </div>
-
-        <!-- VACÍO -->
-        <p
-          class="empty"
-          *ngIf="averias.length === 0">
-          No hay averías urgentes registradas.
-        </p>
-
-      </ng-container>
-
-    </div>
+      <p
+        class="empty"
+        *ngIf="averias.length === 0">
+        No hay averías urgentes registradas.
+      </p>
+    </ng-container>
 
   </mat-card>
 

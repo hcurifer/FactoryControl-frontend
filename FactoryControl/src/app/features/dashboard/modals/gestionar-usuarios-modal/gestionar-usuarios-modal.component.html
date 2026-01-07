@@ -1,70 +1,77 @@
-<h2 mat-dialog-title>Gestionar usuarios</h2>
-
-<mat-dialog-content>
-
-  <!-- FILTROS -->
-  <mat-chip-listbox class="filtros">
-    <mat-chip-option
-      [selected]="filtro === 'todos'"
-      (click)="cambiarFiltro('todos')"
-    >
-      Todos
-    </mat-chip-option>
-
-    <mat-chip-option
-      [selected]="filtro === 'activos'"
-      (click)="cambiarFiltro('activos')"
-    >
-      Activos
-    </mat-chip-option>
-
-    <mat-chip-option
-      [selected]="filtro === 'baja'"
-      (click)="cambiarFiltro('baja')"
-    >
-      Dados de baja
-    </mat-chip-option>
-  </mat-chip-listbox>
-
-  <!-- LISTA -->
-  <div *ngIf="!cargando && usuarios.length === 0" class="empty">
-    No hay usuarios
+<div mat-dialog-title class="dialog-title">
+  <div class="title-text">
+    <h2>Gestión de usuarios</h2>
+    <p>Filtra, revisa y da de baja usuarios.</p>
   </div>
-
-  <div class="lista" *ngIf="!cargando">
-    <div class="usuario" *ngFor="let usuario of usuarios">
-
-      <div class="info">
-        <div class="nombre">
-          {{ usuario.nombre }} {{ usuario.apellidos }}
-        </div>
-        <div class="correo">
-          {{ usuario.correo }}
-        </div>
-      </div>
-
-      <button
-        mat-icon-button
-        color="warn"
-        *ngIf="!usuario.fecha_baja"
-        (click)="darDeBaja(usuario)"
-      >
-        <mat-icon>delete</mat-icon>
-      </button>
-
-    </div>
-  </div>
-
-</mat-dialog-content>
-
-<mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close>Cerrar</button>
 
   <button
     mat-raised-button
     color="primary"
-    (click)="abrirCrearUsuario()"
-  >
+    (click)="abrirCrearUsuario()">
+    <mat-icon>add</mat-icon>
     Crear usuario
   </button>
-</mat-dialog-actions>
+</div>
+
+<div mat-dialog-content class="dialog-content-scroll">
+  <div class="sheet">
+    <!-- FILTROS -->
+    <mat-chip-listbox class="filtros">
+      <mat-chip-option
+        [selected]="filtro === 'todos'"
+        (click)="cambiarFiltro('todos')">
+        Todos
+      </mat-chip-option>
+
+      <mat-chip-option
+        [selected]="filtro === 'activos'"
+        (click)="cambiarFiltro('activos')">
+        Activos
+      </mat-chip-option>
+
+      <mat-chip-option
+        [selected]="filtro === 'baja'"
+        (click)="cambiarFiltro('baja')">
+        Dados de baja
+      </mat-chip-option>
+    </mat-chip-listbox>
+
+    <!-- ESTADOS -->
+    <div class="loading" *ngIf="cargando">Cargando usuarios...</div>
+
+    <div *ngIf="!cargando && usuarios.length === 0" class="empty">
+      No hay usuarios.
+    </div>
+
+    <!-- LISTA -->
+    <div class="lista" *ngIf="!cargando && usuarios.length > 0">
+      <div class="usuario" *ngFor="let usuario of usuarios">
+        <div class="info">
+          <div class="nombre">
+            {{ usuario.nombre }} {{ usuario.apellidos }}
+          </div>
+          <div class="correo">
+            {{ usuario.correo }}
+          </div>
+        </div>
+
+        <div class="acciones">
+          <span class="estado inactiva" *ngIf="usuario.fecha_baja">Baja</span>
+
+          <button
+            mat-icon-button
+            color="warn"
+            *ngIf="!usuario.fecha_baja"
+            (click)="darDeBaja(usuario)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div mat-dialog-actions align="end" class="dialog-actions">
+  <button mat-button mat-dialog-close>Cerrar</button>
+</div>
+

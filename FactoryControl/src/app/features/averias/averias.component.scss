@@ -6,138 +6,24 @@
 
 .averias-header {
   display: flex;
-  flex-direction: column;
-  gap: 4px;
-
-.averias-header {
-  display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 24px;
-}
-
-.header-left h1 {
-  margin: 0;
-}
-
-.header-left p {
-  margin: 4px 0 0;
-  color: #666;
-}
-
-.header-right {
-  display: flex;
-  align-items: center;
-}
-
-.alert-icon {
-  font-size: 28px;
-  animation: blink 1.2s infinite;
-}
+  padding: 18px 22px;
+  border-radius: var(--fc-radius-xl);
+  background: var(--fc-header);
+  color: #fff;
 
   h1 {
     margin: 0;
     font-size: 24px;
-    font-weight: 600;
+    font-weight: 700;
+    letter-spacing: 0.2px;
   }
 
   p {
-    margin: 0;
-    color: #666;
+    margin: 6px 0 0;
+    color: rgba(255, 255, 255, 0.75);
     font-size: 14px;
-  }
-}
-
-.averias-panel {
-  padding: 16px;
-}
-
-.panel-title {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  /*margin-bottom: 12px;*/
-  /*font-weight: 600;*/
-
-  mat-icon {
-    font-size: 20px;
-  }
-}
-
-.alert-icon {
-  animation: blink 1.2s infinite;
-}
-
-.tabla {
-  display: grid;
-  flex-direction: auto;
-  gap: 8px;
-}
-
-.fila {
-  display: grid;
-  grid-template-columns:
-    2.2fr   /* descripción */
-    1.6fr /* máquina */
-    1.4fr /* asignado */
-    1.4fr /* denunciante */
-    1.2fr   /* fecha */
-    1fr   /* estado */
-    1fr   /* prioridad */
-    0.8fr /* acciones */;
-
-  align-items: center;
-  /*gap: 8px;*/
-  padding: 12px 16px;
-  border-radius: 6px;
-
-  &:not(.cabecera) {
-    background-color: #fafafa;
-
-    &:hover {
-      background-color: #f0f0f0;
-    }
-  }
-}
-
-.fila > div {
-  font-size: 0.85rem;
-}
-
-.fila.cabecera {
-  font-size: 13px;
-  font-weight: 600;
-  color: #555;
-  background-color: transparent;
-  padding-bottom: 6px;
-}
-
-.descripcion {
-  /*display: flex;
-  flex-direction: column;
-  gap: 4px;*/
-  font-size: 0.95rem;
-  line-height: 1.3;
-
-}
-
-.asignado,
-.denunciante {
-  font-size: 0.82rem;
-  color: #444;
-}
-.motivo {
-  font-size: 12px;
-  color: #b71c1c;
-}
-
-.acciones {
-  display: flex;
-  gap: 4px;
-  justify-content: center;
-
-  button {
-    min-width: 110px;
   }
 }
 
@@ -145,17 +31,124 @@
   display: flex;
   align-items: center;
   gap: 12px;
+
+  mat-icon-button {
+    transform: scale(1.1);
+  }
 }
 
-.header-right mat-icon-button {
-  transform: scale(1.1);
+.alert-icon {
+  font-size: 28px;
+  animation: blink 1.2s infinite;
+  color: #ff5252;
 }
 
-.empty {
-  margin-top: 12px;
-  text-align: center;
-  color: #777;
-  font-style: italic;
+.averias-panel {
+  padding: 18px 22px 22px;
+  border-radius: var(--fc-radius-xl);
+  background: var(--fc-surface);
+  border: 1px solid var(--fc-border-color);
+  box-shadow: var(--fc-shadow-lg);
+}
+
+.panel-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  color: rgba(0, 0, 0, 0.70);
+  font-weight: 700;
+
+  mat-icon {
+    font-size: 20px;
+  }
+}
+
+.tabla {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 10px;
+}
+
+.tabla-wrap {
+  width: 100%;
+}
+
+.tabla thead th {
+  text-align: left;
+  font-size: 13px;
+  font-weight: 700;
+  color: rgba(0, 0, 0, 0.55);
+  padding: 6px 12px;
+}
+
+.tabla tbody tr {
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid var(--fc-border-color);
+  box-shadow: var(--fc-shadow-md);
+
+  &:hover {
+    background: #fff;
+  }
+}
+
+.tabla tbody td {
+  font-size: 0.85rem;
+  padding: 12px 12px;
+  border-bottom: none;
+  vertical-align: middle;
+}
+
+.tabla tbody td:first-child {
+  border-top-left-radius: var(--fc-radius-md);
+  border-bottom-left-radius: var(--fc-radius-md);
+}
+
+.tabla tbody td:last-child {
+  border-top-right-radius: var(--fc-radius-md);
+  border-bottom-right-radius: var(--fc-radius-md);
+}
+
+.estado-text,
+.prioridad-text {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.tone-ok {
+  color: #2e7d32;
+  background: rgba(46, 125, 50, 0.12);
+}
+
+.tone-warn {
+  color: #f9a825;
+  background: rgba(249, 168, 37, 0.14);
+}
+
+.tone-bad {
+  color: #c62828;
+  background: rgba(198, 40, 40, 0.10);
+}
+
+.tone-neutral {
+  color: #555;
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.descripcion {
+  font-size: 0.95rem;
+  line-height: 1.3;
+}
+
+.motivo {
+  margin-top: 4px;
+  font-size: 12px;
+  color: #b71c1c;
 }
 
 .sub {
@@ -163,11 +156,38 @@
   color: #666;
 }
 
+.acciones {
+  text-align: center;
+  white-space: nowrap;
+
+  button {
+    margin-right: 6px;
+  }
+
+  button:last-child {
+    margin-right: 0;
+  }
+}
+
+.tabla td.acciones {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+}
+
+.tabla th.acciones {
+  text-align: center;
+}
+
 .filtros {
   display: flex;
   gap: 16px;
   margin: 16px 0 24px;
   align-items: center;
+  padding: 12px 12px;
+  border-radius: var(--fc-radius-md);
+  background: rgba(255, 255, 255, 0.65);
+  border: 1px solid var(--fc-border-color);
 }
 
 .filtro {
@@ -182,9 +202,89 @@
   font-size: 0.85rem;
 }
 
+.empty {
+  margin-top: 12px;
+  text-align: center;
+  color: #777;
+  font-style: italic;
+}
 
 @keyframes blink {
   0%   { opacity: 1; }
   50%  { opacity: 0.3; }
   100% { opacity: 1; }
+}
+
+@media (max-width: 900px) {
+  .averias-header {
+    padding: 16px 16px;
+    border-radius: var(--fc-radius-lg);
+
+    h1 {
+      font-size: 20px;
+    }
+  }
+
+  .averias-panel {
+    padding: 16px;
+    border-radius: var(--fc-radius-lg);
+  }
+
+  .filtros {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .filtro {
+    width: 100%;
+    min-width: 0;
+  }
+
+  /* Table -> card list (no horizontal scroll) */
+  .tabla {
+    border-spacing: 0;
+  }
+
+  .tabla thead {
+    display: none;
+  }
+
+  .tabla tbody tr {
+    display: block;
+    padding: 10px 12px;
+    border-radius: var(--fc-radius-md);
+  }
+
+  .tabla tbody td {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 8px 0;
+    text-align: right;
+  }
+
+  .tabla tbody td::before {
+    content: attr(data-label);
+    font-size: 12px;
+    font-weight: 700;
+    color: rgba(0, 0, 0, 0.55);
+    text-align: left;
+    flex: 0 0 auto;
+  }
+
+  .tabla tbody td.descripcion {
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .tabla tbody td.descripcion::before {
+    margin-bottom: 6px;
+  }
+
+  .tabla td.acciones {
+    justify-content: flex-end;
+    padding-top: 10px;
+  }
 }

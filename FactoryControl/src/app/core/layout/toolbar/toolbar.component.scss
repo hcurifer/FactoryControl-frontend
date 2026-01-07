@@ -7,22 +7,33 @@
   height: 72px;
   display: flex;
   align-items: center;
-  padding: 0 16px;
+  padding: 0 18px;
+  background: var(--fc-header) !important;
+  color: #fff;
+  border-bottom: 3px solid var(--fc-accent);
 }
 
 /* --- ZONA IZQUIERDA: LOGOS --- */
 .toolbar-left {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 16px;
 }
 
 .logo-app {
-  height: 40px;
+  height: 46px;
+  background: rgba(255, 255, 255, 0.92);
+  padding: 4px 8px;
+  border-radius: 12px;
+  box-shadow: var(--fc-shadow-md);
 }
 
 .logo-company {
-  height: 36px;
+  height: 42px;
+  background: rgba(255, 255, 255, 0.92);
+  padding: 4px 8px;
+  border-radius: 12px;
+  box-shadow: var(--fc-shadow-md);
 }
 
 /* --- ZONA CENTRAL: TEXTOS --- */
@@ -49,4 +60,8 @@
 .toolbar-right {
   display: flex;
   align-items: center;
+}
+
+:host ::ng-deep .mat-mdc-icon-button {
+  color: #fff;
 }

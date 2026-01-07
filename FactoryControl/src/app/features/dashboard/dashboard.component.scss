@@ -1,5 +1,7 @@
 .dashboard {
-  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
 .top-grid {
@@ -13,7 +15,10 @@
 }
 
 .card {
-  border-radius: 16px;
+  border-radius: var(--fc-radius-xl);
+  background: var(--fc-surface);
+  border: 1px solid var(--fc-border-color);
+  box-shadow: var(--fc-shadow-lg);
 }
 
 /* PERFIL */
@@ -30,8 +35,8 @@
   .avatar {
     width: 72px;
     height: 72px;
-    border-radius: 16px;
-    background: #e0e0e0;
+    border-radius: var(--fc-radius-md);
+    background: rgba(0, 0, 0, 0.06);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -40,7 +45,7 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      border-radius: 16px;
+      border-radius: var(--fc-radius-md);
     }
 
     mat-icon {
@@ -95,6 +100,7 @@
   .panel-title {
     font-weight: 600;
     margin-bottom: 12px;
+    color: var(--fc-text-muted);
   }
 
   .panel-grid {
@@ -102,4 +108,8 @@
     gap: 10px;
     flex-wrap: wrap;
   }
+}
+
+:host ::ng-deep .mat-mdc-outlined-button {
+  border-radius: 999px;
 }
