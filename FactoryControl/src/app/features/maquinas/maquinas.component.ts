@@ -6,7 +6,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -46,7 +46,7 @@ export class MaquinasComponent implements OnInit {
   constructor(
     private maquinaService: MaquinaService,
     private dialog: MatDialog,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
   ) {}
 
   ngOnInit(): void {
@@ -116,9 +116,15 @@ export class MaquinasComponent implements OnInit {
 
     /** Abrir modal de detalle */
   abrirDetalle(maquina: Maquina): void {
-    this.dialog.open(MaquinaDetalleModalComponent, {
+    const dialogRef = this.dialog.open(MaquinaDetalleModalComponent, {
       width: '700px',
       data: maquina
+    });
+
+    dialogRef.afterClosed().subscribe(refrescar => {
+      if (refrescar) {
+        this.cargarMaquinas();
+      }
     });
   }
 }

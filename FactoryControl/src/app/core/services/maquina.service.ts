@@ -66,4 +66,13 @@ export class MaquinaService {
         return this.maquinaApi.getMaquinas();
     }
   }
+
+  deleteLogico(idMaquina: number) {
+    return this.maquinaApi.deleteLogico(idMaquina);
+  }
+
+  deleteFisico(idMaquina: number) {
+    return this.maquinaApi.deleteFisico(idMaquina);
+  }
+
 }
