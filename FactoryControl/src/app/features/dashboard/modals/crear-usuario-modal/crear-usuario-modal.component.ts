@@ -42,7 +42,7 @@ export class CrearUsuarioModalComponent {
     correo: ['', [Validators.required, Validators.email]],
     contrasena: ['', Validators.required],
     rol: ['tecnico', Validators.required],
-    estado_disponible: [true]
+    estado_disponible: [false]
   });
   }
 

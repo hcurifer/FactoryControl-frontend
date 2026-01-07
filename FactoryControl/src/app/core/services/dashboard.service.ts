@@ -68,14 +68,15 @@ export class DashboardService {
       ),
       map(([me, fichajeAbierto]) => {
         const isMando = me.rol === 'mando';
+        const disponible = !!fichajeAbierto && me.estado_disponible;
 
         return {
           me,
           hayFichajeAbierto: !!fichajeAbierto,
           rolLabel: isMando ? 'Mando' : 'Técnico',
           rolChipColor: isMando ? 'primary' : 'accent',
-          disponibilidadLabel: me.estado_disponible ? 'Disponible' : 'No disponible',
-          disponibilidadClass: me.estado_disponible ? 'ok' : 'bad'
+          disponibilidadLabel: disponible ? 'Disponible' : 'No disponible',
+          disponibilidadClass: disponible ? 'ok' : 'bad'
         };
       })
     );

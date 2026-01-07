@@ -47,7 +47,7 @@
         <button
           mat-raised-button
           color="primary"
-          *ngIf="!vm.me.estado_disponible"
+          *ngIf="!vm.hayFichajeAbierto"
           (click)="ficharEntrada()">
           Fichar
         </button>
@@ -55,7 +55,7 @@
         <button
           mat-raised-button
           color="warn"
-          *ngIf="vm.me.estado_disponible"
+          *ngIf="vm.hayFichajeAbierto"
           (click)="ficharSalida()">
           Salir
         </button>
