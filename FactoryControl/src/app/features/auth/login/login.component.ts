@@ -62,7 +62,8 @@ export class LoginComponent {
   }).subscribe({
     next: (res) => {
       this.auth.setSession(res);
-      this.router.navigate(['/app']);
+      this.router.navigateByUrl('/loading', { replaceUrl: true });
+      //this.router.navigate(['/app']);
     },
     error: (err) => {
       console.error('LOGIN REAL ERROR:', err);
