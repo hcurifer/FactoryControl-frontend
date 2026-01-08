@@ -6,6 +6,7 @@ import { AveriasComponent } from './features/averias/averias.component';
 import { PreventivosComponent } from './features/preventivos/preventivos.component';
 import { LoginLayoutComponent } from './core/layout/login-layout/login-layout.component'
 import { LoginComponent } from './features/auth/login/login.component';
+import { LoginLoadingComponent } from './features/auth/login-loading/login-loading.component';
 import { authChildGuard, authGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
@@ -19,6 +20,13 @@ export const routes: Routes = [
         component: LoginComponent,
       },
     ],
+  },
+
+  // Pantalla de transición tras un login correcto
+  {
+    path: 'loading',
+    component: LoginLoadingComponent,
+    canActivate: [authGuard],
   },
 
   // Zona privada, necesario un login correcto
