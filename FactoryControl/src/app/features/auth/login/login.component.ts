@@ -3,6 +3,7 @@ import { ReactiveFormsModule, FormBuilder, Validators, FormGroup } from '@angula
 import { Router } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
 import { AuthApi } from '../../../data-access/api/auth.api';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -30,7 +31,8 @@ export class LoginComponent {
     private fb: FormBuilder,
     private auth: AuthService,
     private authApi: AuthApi,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar
   ) {
     this.loginForm = this.fb.group({
     numeroEmpleado: ['', [Validators.required]],
@@ -66,7 +68,8 @@ export class LoginComponent {
       //this.router.navigate(['/app']);
     },
     error: (err) => {
-      console.error('LOGIN REAL ERROR:', err);
+      const mensaje = err?.error?.detail || 'No se ha podido iniciar sesión';
+      this.snackBar.open(mensaje, 'Cerrar', { duration: 5000 });
     }
   });
 }

@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { DashboardService } from '../../core/services/dashboard.service';
 import { ModalSalidaFichajeComponent } from './modal-salida-fichaje/modal-salida-fichaje.component';
@@ -40,7 +41,8 @@ export class DashboardComponent {
 
   constructor(
     private dashboardService: DashboardService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar
   ) {
     this.vm$ = this.dashboardService.getDashboardVM();
   }
@@ -49,7 +51,13 @@ export class DashboardComponent {
 
   ficharEntrada(): void {
     this.dashboardService.ficharEntrada().subscribe({
-      error: (err) => console.error('Error al fichar entrada', err)
+      next: () => {
+        this.snackBar.open('Entrada fichada', 'Cerrar', {duration: 500});
+      },
+      error: (err) => {
+        const mensaje = err?.error?.detail || 'Error al fichar entrada';
+        this.snackBar.open(mensaje, 'Cerrar', { duration: 5000 });
+      }
     });
   }
 
@@ -64,7 +72,10 @@ export class DashboardComponent {
       this.dashboardService
         .ficharSalida(result.salidaAntesDeTiempo, result.motivo)
         .subscribe({
-          error: (err) => console.error('Error al fichar salida', err)
+          error: (err) => {
+            const mensaje = err?.error?.detail || 'Error al fichar salida';
+            this.snackBar.open(mensaje, 'Cerrar', { duration: 5000 });
+          }
         });
     });
   }
