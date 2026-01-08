@@ -1,18 +1,23 @@
-<div>
-  <h2 mat-dialog-title>Completar avería</h2>
+<div mat-dialog-title class="dialog-title">
+  <div class="title-text">
+    <h2>Completar avería</h2>
+    <p>Confirma que la avería queda marcada como completada.</p>
+  </div>
+</div>
 
-  <mat-dialog-content>
-    <p>
+<div mat-dialog-content class="dialog-content">
+  <div class="sheet">
+    <p class="lead">
       ¿Deseas marcar la siguiente avería como <strong>completada</strong>?
     </p>
-    <p><em>{{ data.descripcion }}</em></p>
-  </mat-dialog-content>
-
-  <mat-dialog-actions align="end">
-    <button mat-button (click)="cancelar()">Cancelar</button>
-    <button mat-raised-button color="primary" (click)="confirmar()">
-      Completar
-    </button>
-  </mat-dialog-actions>
-
+    <p class="descripcion"><em>{{ data.descripcion }}</em></p>
+  </div>
 </div>
+
+<div mat-dialog-actions align="end" class="dialog-actions">
+  <button mat-button (click)="cancelar()">Cancelar</button>
+  <button mat-raised-button color="primary" (click)="confirmar()">
+    Completar
+  </button>
+</div>
+

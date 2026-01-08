@@ -1,0 +1,54 @@
+.dialog-title {
+  padding: 18px 22px;
+  background: var(--fc-header);
+  color: #fff;
+
+  .title-text {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    h2 {
+      margin: 0;
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: 0.2px;
+    }
+
+    p {
+      margin: 0;
+      color: rgba(255, 255, 255, 0.75);
+      font-size: 13px;
+    }
+  }
+}
+
+.dialog-content {
+  padding: 18px 22px 10px;
+}
+
+.sheet {
+  padding: 16px;
+  border-radius: var(--fc-radius-lg);
+  background: var(--fc-surface);
+  border: 1px solid var(--fc-border-color);
+  box-shadow: var(--fc-shadow-lg);
+}
+
+.lead {
+  margin: 0 0 10px;
+  font-weight: 600;
+}
+
+.field {
+  width: 100%;
+}
+
+.check {
+  margin-top: 10px;
+}
+
+.dialog-actions {
+  padding: 10px 22px 18px;
+}
+
