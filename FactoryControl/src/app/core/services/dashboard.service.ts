@@ -9,9 +9,13 @@ import { FichajeAbiertoResponse } from '../../data-access/models/fichajes.model'
 /** ViewModel del Dashboard (datos ya preparados para la vista) */
 export interface DashboardVM {
   me: AuthMeResponse;
+  fichajeAbierto: FichajeAbiertoResponse | null;
   hayFichajeAbierto: boolean;
+
   rolLabel: string;
-  rolChipColor: 'primary' | 'accent';
+  rolClass: 'mando' | 'tecnico';
+  cuentaLabel: string;
+  cuentaClass: 'active' | 'inactive';
   disponibilidadLabel: string;
   disponibilidadClass: 'ok' | 'bad';
 }
@@ -69,12 +73,19 @@ export class DashboardService {
       map(([me, fichajeAbierto]) => {
         const isMando = me.rol === 'mando';
         const disponible = !!fichajeAbierto && me.estado_disponible;
+        const cuentaActiva = me.fecha_baja == null;
 
         return {
           me,
+          fichajeAbierto,
           hayFichajeAbierto: !!fichajeAbierto,
+
           rolLabel: isMando ? 'Mando' : 'Técnico',
-          rolChipColor: isMando ? 'primary' : 'accent',
+          rolClass: isMando ? 'mando' : 'tecnico',
+
+          cuentaLabel: cuentaActiva ? 'Cuenta activa' : 'Cuenta de baja',
+          cuentaClass: cuentaActiva ? 'active' : 'inactive',
+
           disponibilidadLabel: disponible ? 'Disponible' : 'No disponible',
           disponibilidadClass: disponible ? 'ok' : 'bad'
         };

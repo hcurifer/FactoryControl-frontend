@@ -5,62 +5,172 @@
 
     <!-- TARJETA PERFIL -->
     <mat-card class="card perfil">
-      <div class="perfil-row">
-
-        <div class="avatar">
+       <!-- Header: avatar + nombre + metadatos -->
+      <div class="perfil-header">
+        <div class="avatar" [class.has-img]="!!vm.me.imagen">
           <img *ngIf="vm.me.imagen; else iconUser" [src]="vm.me.imagen" />
           <ng-template #iconUser>
             <mat-icon>person</mat-icon>
           </ng-template>
         </div>
 
-        <div class="perfil-info">
-          <div class="nombre">
-            {{ vm.me.nombre }} {{ vm.me.apellidos }}
+        <div class="header-main">
+          <div class="name-row">
+            <div class="nombre">{{ vm.me.nombre }} {{ vm.me.apellidos }}</div>
+            <div class="meta-id">ID #{{ vm.me.id_usuario }}</div>
           </div>
 
-          <div class="empresa">
-            Nº empresa: {{ vm.me.numero_empresa }}
+          <div class="sub-row">
+            <span class="sub-item">
+              <mat-icon>badge</mat-icon>
+              Nº empresa: <b>{{ vm.me.numero_empresa }}</b>
+            </span>
+
+            <span class="dot">•</span>
+
+            <span class="sub-item">
+              <mat-icon>mail</mat-icon>
+              {{ vm.me.correo }}
+            </span>
           </div>
 
-          <mat-chip-set>
-            <mat-chip [color]="vm.rolChipColor" selected>
+          <mat-chip-set class="chips">
+            <mat-chip class="chip role" [ngClass]="'role--' + vm.rolClass" selected>
+              <mat-icon>work</mat-icon>
               {{ vm.rolLabel }}
+            </mat-chip>
+
+            <mat-chip class="chip account" [ngClass]="'account--' + vm.cuentaClass" selected>
+              <mat-icon>{{ vm.cuentaClass === 'active' ? 'verified' : 'block' }}</mat-icon>
+              {{ vm.cuentaLabel }}
+            </mat-chip>
+
+            <mat-chip class="chip availability" [ngClass]="'availability--' + vm.disponibilidadClass" selected>
+              <mat-icon>{{ vm.disponibilidadClass === 'ok' ? 'check_circle' : 'cancel' }}</mat-icon>
+              {{ vm.disponibilidadLabel }}
             </mat-chip>
           </mat-chip-set>
         </div>
+      </div>
 
+      <!-- Body: datos extra -->
+      <div class="perfil-body">
+        <div class="info-grid">
+          <div class="info-item">
+            <mat-icon>event</mat-icon>
+            <div>
+              <div class="k">Fecha de alta</div>
+              <div class="v">{{ vm.me.fecha_alta | date:'dd/MM/yyyy' }}</div>
+            </div>
+          </div>
+
+          <div class="info-item" *ngIf="vm.me.fecha_baja">
+            <mat-icon>event_busy</mat-icon>
+            <div>
+              <div class="k">Fecha de baja</div>
+              <div class="v">{{ vm.me.fecha_baja | date:'dd/MM/yyyy' }}</div>
+            </div>
+          </div>
+
+          <div class="info-item">
+            <mat-icon>schedule</mat-icon>
+            <div>
+              <div class="k">Fichaje</div>
+              <div class="v" *ngIf="vm.fichajeAbierto; else sinFichaje">
+                Abierto el {{ vm.fichajeAbierto.fecha | date:'dd/MM/yyyy' }} · {{ vm.fichajeAbierto.hora_entrada }}
+              </div>
+              <ng-template #sinFichaje>
+                <span class="muted">Sin fichaje abierto</span>
+              </ng-template>
+            </div>
+          </div>
+        </div>
       </div>
     </mat-card>
 
     <!-- TARJETA FICHAJE -->
     <mat-card class="card fichaje">
-      <div class="estado">
-        <span class="label">Estado</span>
-        <span class="valor" [class.ok]="vm.disponibilidadClass === 'ok'"
-              [class.bad]="vm.disponibilidadClass === 'bad'">
+      <!-- Header -->
+      <div class="fichaje-header">
+        <div class="header-left">
+          <div class="icon-wrap">
+            <mat-icon>schedule</mat-icon>
+          </div>
+
+          <div class="titles">
+            <div class="h-title">Control de fichaje</div>
+            <div class="h-subtitle">
+              Gestiona tu entrada y salida desde aquí
+            </div>
+          </div>
+        </div>
+
+        <mat-chip class="chip estado"
+          [ngClass]="vm.disponibilidadClass === 'ok' ? 'estado--ok' : 'estado--bad'"
+          selected>
+          <mat-icon>{{ vm.disponibilidadClass === 'ok' ? 'check_circle' : 'cancel' }}</mat-icon>
           {{ vm.disponibilidadLabel }}
-        </span>
+        </mat-chip>
       </div>
 
-      <div class="acciones">
+      <!-- Body -->
+      <div class="fichaje-body">
+        <div class="info-box" *ngIf="vm.fichajeAbierto; else sinFichaje">
+          <div class="row">
+            <mat-icon>login</mat-icon>
+            <div class="txt">
+              <div class="k">Entrada registrada</div>
+              <div class="v">{{ vm.fichajeAbierto.hora_entrada }}</div>
+            </div>
+          </div>
+
+          <div class="row">
+            <mat-icon>event</mat-icon>
+            <div class="txt">
+              <div class="k">Fecha</div>
+              <div class="v">{{ vm.fichajeAbierto.fecha | date:'dd/MM/yyyy' }}</div>
+            </div>
+          </div>
+        </div>
+
+        <ng-template #sinFichaje>
+          <div class="info-box muted">
+            <div class="row">
+              <mat-icon>info</mat-icon>
+              <div class="txt">
+                <div class="k">Sin fichaje abierto</div>
+                <div class="v">Pulsa “Fichar” para iniciar tu jornada</div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </div>
+
+      <!-- Footer -->
+      <div class="fichaje-footer">
         <button
           mat-raised-button
           color="primary"
+          class="btn"
           *ngIf="!vm.hayFichajeAbierto"
           (click)="ficharEntrada()">
-          Fichar
+          <mat-icon>how_to_reg</mat-icon>
+          Fichar entrada
         </button>
 
         <button
           mat-raised-button
           color="warn"
+          class="btn"
           *ngIf="vm.hayFichajeAbierto"
           (click)="ficharSalida()">
-          Salir
+          <mat-icon>logout</mat-icon>
+          Fichar salida
         </button>
       </div>
-    </mat-card>
+
+  </mat-card>
+
 
   </div>
 
@@ -76,7 +186,7 @@
     <!-- Mando -->
     <div class="panel-grid" *ngIf="vm.me.rol === 'mando'">
       <button mat-stroked-button (click)="openGestionarUsuarios()">Gestionar usuarios</button>
-      <button mat-stroked-button>Asignar averías</button>
+      <!--<button mat-stroked-button>Asignar averías</button>-->
       <button mat-stroked-button (click)="openGestionarGamas()">Gestionar gamas</button>
       <button mat-stroked-button (click)="openAsignarGama()">Asignar gama</button>
     </div>
