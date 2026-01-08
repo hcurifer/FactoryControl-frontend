@@ -41,6 +41,8 @@
   font-size: 28px;
   animation: blink 1.2s infinite;
   color: #ff5252;
+  width: 28px;
+  height: 28px;
 }
 
 .averias-panel {
@@ -169,11 +171,11 @@
   }
 }
 
-.tabla td.acciones {
-  display: flex;
-  justify-content: center;
-  gap: 6px;
-}
+//.tabla td.acciones {
+//  display: flex;
+//  justify-content: center;
+//  gap: 6px;
+//}
 
 .tabla th.acciones {
   text-align: center;
@@ -283,8 +285,8 @@
     margin-bottom: 6px;
   }
 
-  .tabla td.acciones {
-    justify-content: flex-end;
-    padding-top: 10px;
-  }
+  //.tabla td.acciones {
+  //  justify-content: flex-end;
+  //  padding-top: 10px;
+  //}
 }
