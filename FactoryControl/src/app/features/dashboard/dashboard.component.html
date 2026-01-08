@@ -36,18 +36,24 @@
 
           <mat-chip-set class="chips">
             <mat-chip class="chip role" [ngClass]="'role--' + vm.rolClass" selected>
-              <mat-icon>work</mat-icon>
-              {{ vm.rolLabel }}
+              <div class="flex">
+                <mat-icon>work</mat-icon>
+                {{ vm.rolLabel }}
+              </div>
             </mat-chip>
 
             <mat-chip class="chip account" [ngClass]="'account--' + vm.cuentaClass" selected>
-              <mat-icon>{{ vm.cuentaClass === 'active' ? 'verified' : 'block' }}</mat-icon>
-              {{ vm.cuentaLabel }}
+              <div class="flex">
+                <mat-icon>{{ vm.cuentaClass === 'active' ? 'verified' : 'block' }}</mat-icon>
+                {{ vm.cuentaLabel }}
+              </div>
             </mat-chip>
 
             <mat-chip class="chip availability" [ngClass]="'availability--' + vm.disponibilidadClass" selected>
-              <mat-icon>{{ vm.disponibilidadClass === 'ok' ? 'check_circle' : 'cancel' }}</mat-icon>
-              {{ vm.disponibilidadLabel }}
+              <div class="flex">
+                <mat-icon>{{ vm.disponibilidadClass === 'ok' ? 'check_circle' : 'cancel' }}</mat-icon>
+                {{ vm.disponibilidadLabel }}
+              </div>
             </mat-chip>
           </mat-chip-set>
         </div>
@@ -104,13 +110,14 @@
             </div>
           </div>
         </div>
-
+        <!--
         <mat-chip class="chip estado"
           [ngClass]="vm.disponibilidadClass === 'ok' ? 'estado--ok' : 'estado--bad'"
           selected>
           <mat-icon>{{ vm.disponibilidadClass === 'ok' ? 'check_circle' : 'cancel' }}</mat-icon>
           {{ vm.disponibilidadLabel }}
         </mat-chip>
+        -->
       </div>
 
       <!-- Body -->

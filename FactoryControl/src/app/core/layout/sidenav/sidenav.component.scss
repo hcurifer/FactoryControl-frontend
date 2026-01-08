@@ -26,7 +26,9 @@ a {
 
 mat-icon {
   font-size: 28px;
+  width: 28px;
   color: var(--fc-nav-icon);
+  height: 28px;
 }
 
 a.active {
@@ -35,7 +37,8 @@ a.active {
 }
 
 :host ::ng-deep .mdc-list-item__primary-text {
-  display: block;
+  display: flex;
+  justify-content: center;
 }
 
 :host ::ng-deep .mat-mdc-nav-list,
