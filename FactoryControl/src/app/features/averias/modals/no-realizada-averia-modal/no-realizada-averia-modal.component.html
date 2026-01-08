@@ -1,33 +1,41 @@
-<div>
-  <h2 mat-dialog-title>Avería no realizada</h2>
+<div mat-dialog-title class="dialog-title">
+  <div class="title-text">
+    <h2>Avería no realizada</h2>
+    <p>Indica el motivo y, si quieres, notifica automáticamente.</p>
+  </div>
+</div>
 
-  <mat-dialog-content>
-    <p>Indica el motivo por el cual la avería no ha podido realizarse:</p>
+<div mat-dialog-content class="dialog-content">
+  <div class="sheet">
+    <p class="lead">Indica el motivo por el cual la avería no ha podido realizarse:</p>
 
-    <mat-form-field appearance="outline" style="width:100%">
+    <mat-form-field appearance="outline" class="field">
+      <mat-label>Motivo</mat-label>
       <textarea
         matInput
         rows="4"
         [(ngModel)]="motivo"
+        name="motivo"
         placeholder="Motivo obligatorio">
       </textarea>
     </mat-form-field>
 
-      <mat-checkbox [(ngModel)]="notificar">
+    <div class="check">
+      <mat-checkbox [(ngModel)]="notificar" name="notificar">
         Notificar con correo automático desde la aplicación
       </mat-checkbox>
-  </mat-dialog-content>
-
-
-  <mat-dialog-actions align="end">
-    <button mat-button (click)="cancelar()">Cancelar</button>
-    <button
-      mat-raised-button
-      color="warn"
-      [disabled]="!motivo.trim()"
-      (click)="enviar()">
-      Enviar
-    </button>
-  </mat-dialog-actions>
-
+    </div>
+  </div>
 </div>
+
+<div mat-dialog-actions align="end" class="dialog-actions">
+  <button mat-button (click)="cancelar()">Cancelar</button>
+  <button
+    mat-raised-button
+    color="warn"
+    [disabled]="!motivo.trim()"
+    (click)="enviar()">
+    Enviar
+  </button>
+</div>
+

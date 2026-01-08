@@ -74,7 +74,10 @@ export class AveriasComponent implements OnInit {
 
 completarAveria(averia: AveriaUrgenteView): void {
   const dialogRef = this.dialog.open(CompletarAveriaModalComponent, {
-    width: '420px',
+    width: '720px',
+    maxWidth: '95vw',
+    panelClass: 'fc-dialog-mock',
+    autoFocus: false,
     data: { descripcion: averia.descripcion }
   });
 
@@ -148,7 +151,10 @@ marcarNoRealizada(averia: AveriaUrgenteView): void {
   if (!usuario) return;
 
   const dialogRef = this.dialog.open(NoRealizadaAveriaModalComponent, {
-    width: '480px',
+    width: '780px',
+    maxWidth: '95vw',
+    panelClass: 'fc-dialog-mock',
+    autoFocus: false,
     disableClose: true,
     data: {
       idAveria: averia.id_averia,
