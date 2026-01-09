@@ -10,7 +10,7 @@
     <mat-card class="imagen-card">
       <img
         *ngIf="maquina.imagen; else placeholder"
-        [src]="maquina.imagen"
+        [src]="'assets/maquinas/' + maquina.imagen"
         alt="Imagen de la máquina" />
 
       <ng-template #placeholder>

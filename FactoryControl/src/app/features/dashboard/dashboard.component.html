@@ -8,7 +8,7 @@
        <!-- Header: avatar + nombre + metadatos -->
       <div class="perfil-header">
         <div class="avatar" [class.has-img]="!!vm.me.imagen">
-          <img *ngIf="vm.me.imagen; else iconUser" [src]="vm.me.imagen" />
+          <img *ngIf="vm.me.imagen; else iconUser" [src]="'assets/perfiles/' + vm.me.imagen" />
           <ng-template #iconUser>
             <mat-icon>person</mat-icon>
           </ng-template>
